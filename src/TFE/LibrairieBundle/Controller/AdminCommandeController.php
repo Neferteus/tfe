@@ -50,7 +50,7 @@ class AdminCommandeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $commande = $em->getRepository('TFELibrairieBundle:Commande')->find($id);
 
-        if($commande == null) throw $this->createNotFoundException("La commande n'existe pas.");
+        if($commande === null) throw $this->createNotFoundException("La commande n'existe pas.");
 
         if ($commande->getEnvoye())
         {

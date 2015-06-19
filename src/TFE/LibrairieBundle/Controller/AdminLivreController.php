@@ -82,7 +82,7 @@ class AdminLivreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $livre = $em->getRepository('TFELibrairieBundle:Livre')->find($id);
 
-        if ($livre == null) {
+        if ($livre === null) {
             throw $this->createNotFoundException("Le livre ".$id." n'existe pas.");
         }
 
@@ -117,7 +117,7 @@ class AdminLivreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $livre = $em->getRepository('TFELibrairieBundle:Livre')->find($id);
 
-        if ($livre == null) {
+        if ($livre === null) {
             throw $this->createNotFoundException("Le livre ".$id." n'existe pas.");
         }
 

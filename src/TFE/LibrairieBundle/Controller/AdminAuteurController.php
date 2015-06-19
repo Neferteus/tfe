@@ -85,7 +85,7 @@ class AdminAuteurController extends Controller
         $em = $this->getDoctrine()->getManager();
         $auteur = $em->getRepository('TFELibrairieBundle:Auteur')->find($id);
 
-        if ($auteur == null) {
+        if ($auteur === null) {
             throw $this->createNotFoundException("L'auteur ".$id." n'existe pas.");
         }
 
@@ -113,7 +113,7 @@ class AdminAuteurController extends Controller
         $em = $this->getDoctrine()->getManager();
         $auteur = $em->getRepository('TFELibrairieBundle:Auteur')->find($id);
 
-        if ($auteur == null) {
+        if ($auteur === null) {
             throw $this->createNotFoundException("L'auteur ".$id." n'existe pas.");
         }
 

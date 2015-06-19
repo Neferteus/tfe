@@ -55,7 +55,7 @@ class AdminEditionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $edition = $em->getRepository('TFELibrairieBundle:Edition')->find($id);
 
-        if ($edition == null) {
+        if ($edition === null) {
             throw $this->createNotFoundException("La maison d'édition ".$id." n'existe pas.");
         }
 
@@ -83,7 +83,7 @@ class AdminEditionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $edition = $em->getRepository('TFELibrairieBundle:Edition')->find($id);
 
-        if ($edition == null) {
+        if ($edition === null) {
             throw $this->createNotFoundException("La maison d'édition ".$id." n'existe pas.");
         }
 

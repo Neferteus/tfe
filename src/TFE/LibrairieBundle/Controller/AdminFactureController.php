@@ -48,7 +48,7 @@ class AdminFactureController extends Controller
     {
         $facture = $this->getDoctrine()->getManager()->getRepository('TFELibrairieBundle:Facture')->find($id);
 
-        if ($facture != null)
+        if ($facture !== null)
         {
             $fichier = $id . ".pdf";
             $chemin = __DIR__ . '/../Resources/public/Facture/'; // emplacement du fichier

@@ -55,7 +55,7 @@ class AdminCollectionController extends Controller
         $em = $this->getDoctrine()->getManager();
         $collection = $em->getRepository('TFELibrairieBundle:Collection')->find($id);
 
-        if ($collection == null) {
+        if ($collection === null) {
             throw $this->createNotFoundException("La collection ".$id." n'existe pas.");
         }
 
@@ -83,7 +83,7 @@ class AdminCollectionController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $collection = $em->getRepository('TFELibrairieBundle:Collection')->find($id);
-        if ($collection == null) {
+        if ($collection === null) {
             throw $this->createNotFoundException("La collection ".$id." n'existe pas.");
         }
 

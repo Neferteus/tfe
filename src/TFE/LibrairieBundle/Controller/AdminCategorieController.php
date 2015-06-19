@@ -47,7 +47,7 @@ class AdminCategorieController extends Controller
         $em = $this->getDoctrine()->getManager();
         $categorie = $em->getRepository('TFELibrairieBundle:Categorie')->find($id);
 
-        if ($categorie == null) {
+        if ($categorie === null) {
             throw $this->createNotFoundException("La catégorie ".$id." n'existe pas.");
         }
 

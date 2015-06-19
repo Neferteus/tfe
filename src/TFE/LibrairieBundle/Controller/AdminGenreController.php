@@ -55,7 +55,7 @@ class AdminGenreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $genre = $em->getRepository('TFELibrairieBundle:Genre')->find($id);
 
-        if ($genre == null) {
+        if ($genre === null) {
             throw $this->createNotFoundException("Le genre ".$id." n'existe pas.");
         }
 
@@ -83,7 +83,7 @@ class AdminGenreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $genre = $em->getRepository('TFELibrairieBundle:Genre')->find($id);
 
-        if ($genre == null) {
+        if ($genre === null) {
             throw $this->createNotFoundException("Le genre ".$id." n'existe pas.");
         }
 

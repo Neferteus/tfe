@@ -1,0 +1,15 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: tfe
+    database_user: root
+    database_password: null
+    mailer_transport: gmail
+    mailer_encryption: ssl
+    mailer_user: bacinfogestion@gmail.com
+    mailer_password: mdpgmail
+    locale: fr
+    secret: CeciEstUnMotDePassePersonnel
+    mailer_host: 127.0.0.1

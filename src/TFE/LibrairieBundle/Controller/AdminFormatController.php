@@ -53,7 +53,7 @@ class AdminFormatController extends Controller
         $em = $this->getDoctrine()->getManager();
         $format = $em->getRepository('TFELibrairieBundle:Format')->find($id);
 
-        if ($format == null) {
+        if ($format === null) {
             throw $this->createNotFoundException("Le format ".$id." n'existe pas.");
         }
 
@@ -81,7 +81,7 @@ class AdminFormatController extends Controller
         $em = $this->getDoctrine()->getManager();
         $format = $em->getRepository('TFELibrairieBundle:Format')->find($id);
 
-        if ($format == null) {
+        if ($format === null) {
             throw $this->createNotFoundException("Le format ".$id." n'existe pas.");
         }
 

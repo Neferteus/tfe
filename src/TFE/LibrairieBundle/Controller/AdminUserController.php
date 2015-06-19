@@ -146,7 +146,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $utilisateur = $em->getRepository('TFEUserBundle:Utilisateur')->find($id);
 
-        if ($utilisateur == null) {
+        if ($utilisateur === null) {
             throw $this->createNotFoundException("L'utilisateur ".$id." n'existe pas.");
         }
 
@@ -161,7 +161,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $utilisateur = $em->getRepository('TFEUserBundle:Utilisateur')->find($id);
 
-        if ($utilisateur == null) {
+        if ($utilisateur === null) {
             throw $this->createNotFoundException("L'utilisateur ".$id." n'existe pas.");
         }
 
@@ -188,7 +188,7 @@ class AdminUserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $utilisateur = $em->getRepository('TFEUserBundle:Utilisateur')->find($id);
 
-        if ($utilisateur == null) {
+        if ($utilisateur === null) {
             throw $this->createNotFoundException("L'utilisateur ".$id." n'existe pas.");
         }
 

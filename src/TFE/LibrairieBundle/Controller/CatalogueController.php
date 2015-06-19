@@ -17,7 +17,7 @@ class CatalogueController extends Controller
 
         $categorie = $em->getRepository('TFELibrairieBundle:Categorie')->find($id);
 
-        if($categorie == null) {
+        if($categorie === null) {
             $livres_count = $em->getRepository('TFELibrairieBundle:Livre')->countAll();
             $pages_count = ceil($livres_count / $maxLivres);
             $livres = $em->getRepository('TFELibrairieBundle:Livre')->getListeComplete($page, $maxLivres);

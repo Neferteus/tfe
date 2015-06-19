@@ -90,7 +90,7 @@ class AdminNewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('TFELibrairieBundle:News')->getNewsWithUser($id);
 
-        if ($news == null)
+        if ($news === null)
         {
             throw $this->createNotFoundException("La news " . $id . " n'existe plus.");
         }
@@ -109,7 +109,7 @@ class AdminNewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('TFELibrairieBundle:News')->getNewsWithUser($id);
 
-        if ($news == null)
+        if ($news === null)
         {
             throw $this->createNotFoundException("La news " . $id . " n'existe plus.");
         }
@@ -128,7 +128,7 @@ class AdminNewsController extends Controller
         $em = $this->getDoctrine()->getManager();
         $news = $em->getRepository('TFELibrairieBundle:News')->getNewsWithUser($id);
 
-        if ($news == null)
+        if ($news === null)
         {
             throw $this->createNotFoundException("La news " . $id . " n'existe plus.");
         }

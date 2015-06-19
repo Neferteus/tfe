@@ -82,7 +82,7 @@ class AdminAccompagnementController extends Controller
         $em = $this->getDoctrine()->getManager();
         $accompagnement = $em->getRepository('TFELibrairieBundle:Accompagnement')->find($id);
 
-        if ($accompagnement == null) {
+        if ($accompagnement === null) {
             throw $this->createNotFoundException("Le genre ".$id." n'existe pas.");
         }
 
@@ -110,7 +110,7 @@ class AdminAccompagnementController extends Controller
         $em = $this->getDoctrine()->getManager();
         $accompagnement = $em->getRepository('TFELibrairieBundle:Accompagnement')->find($id);
 
-        if ($accompagnement == null) {
+        if ($accompagnement === null) {
             throw $this->createNotFoundException("L'accompagnement ".$id." n'existe pas.");
         }
 

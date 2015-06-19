@@ -79,7 +79,7 @@ class UtilisateurController extends Controller
 
             $utilisateur = $em->getRepository('TFEUserBundle:Utilisateur')->confirmEmail($username, $codeActivation);
 
-            if ($utilisateur != null)
+            if ($utilisateur !== null)
             {
                 $utilisateur->setInscriptionValide(true);
                 $utilisateur->setCodeActivation("");

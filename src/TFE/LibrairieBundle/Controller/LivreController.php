@@ -20,7 +20,7 @@ class LivreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $livre = $em->getRepository('TFELibrairieBundle:Livre')->getLivreCompletParId($id);
 
-        if ($livre == null)
+        if ($livre === null)
         {
             throw $this->createNotFoundException("La news " . $id . " n'existe plus.");
         }
@@ -33,7 +33,7 @@ class LivreController extends Controller
 
         // Si l'utilisateur a déjà mis une note, on va associer la note à l'objet
         $noteExist = $em->getRepository('TFELibrairieBundle:Note')->noteExist($livre, $utilisateur);
-        if ($noteExist != null)
+        if ($noteExist !== null)
         {
             $note->setEtoile($noteExist->getEtoile());
         }
@@ -78,7 +78,7 @@ class LivreController extends Controller
                     //$utilisateur = $this->get('security.token_storage')->getToken()->getUser();
                     $noteExist = $em->getRepository('TFELibrairieBundle:Note')->noteExist($livre, $utilisateur);
 
-                    if ($noteExist != null)
+                    if ($noteExist !== null)
                     {
                         $noteExist->setEtoile($formNote->get('etoile')->getData());
                         $em->flush();
@@ -117,7 +117,7 @@ class LivreController extends Controller
         $em = $this->getDoctrine()->getManager();
         $livre = $em->getRepository('TFELibrairieBundle:Livre')->getLivreCompletParId($id);
 
-        if ($livre == null)
+        if ($livre === null)
         {
             throw $this->createNotFoundException("La news " . $id . " n'existe plus.");
         }
@@ -130,7 +130,7 @@ class LivreController extends Controller
 
         // Si l'utilisateur a déjà mis une note, on va associer la note à l'objet
         $noteExist = $em->getRepository('TFELibrairieBundle:Note')->noteExist($livre, $utilisateur);
-        if ($noteExist != null)
+        if ($noteExist !== null)
         {
             $note->setEtoile($noteExist->getEtoile());
         }
@@ -175,7 +175,7 @@ class LivreController extends Controller
                     //$utilisateur = $this->get('security.token_storage')->getToken()->getUser();
                     $noteExist = $em->getRepository('TFELibrairieBundle:Note')->noteExist($livre, $utilisateur);
 
-                    if ($noteExist != null)
+                    if ($noteExist !== null)
                     {
                         $noteExist->setEtoile($formNote->get('etoile')->getData());
                         $em->flush();
