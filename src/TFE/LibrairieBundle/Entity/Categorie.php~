@@ -1,0 +1,54 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Categorie
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\CategorieRepository")
+ */
+class Categorie
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->livres = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomCategorie", type="string", length=30)
+     */
+    private $nomCategorie;
+
+    /**
+     * @var Livre
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Livre", mappedBy="categorie")
+     */
+    private $livres;
+
+    /**
+     * @var Genre
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Genre", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $genre;
+
+}

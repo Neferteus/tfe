@@ -1,0 +1,889 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Livre
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\LivreRepository")
+ */
+class Livre
+{
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->accompagnements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->commentaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->auteurs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->livreCommandes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->livreNoteCredits = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="codeIsbn", type="integer")
+     */
+    private $codeIsbn;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titre", type="string", length=150)
+     *
+     * @Assert\notBlank(message="Veuillez remplir ce champ")
+     */
+    private $titre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="soustitre", type="string", length=100, nullable=true)
+     */
+    private $soustitre;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="anneeParution", type="date")
+     *
+     * @Assert\DateTime()
+     */
+    private $anneeParution;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="urlLivre", type="string", length=255, nullable=true)
+     */
+    private $urlLivre;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     */
+    private $photo;
+
+    /**
+     * @Assert\File(maxSize="2000000")
+     */
+    private $file;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="teteAffiche", type="boolean")
+     */
+    private $teteAffiche;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aVenir", type="boolean")
+     */
+    private $aVenir;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="prixVenteHtva", type="float")
+     */
+    private $prixVenteHtva;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="tvaLivre", type="float")
+     */
+    private $tvaLivre;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="ristourne", type="float")
+     */
+    private $ristourne;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="nbrVente", type="integer")
+     */
+    private $nbrVente;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="stock", type="integer")
+     */
+    private $stock;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="seuilAlerte", type="integer")
+     */
+    private $seuilAlerte;
+
+    /**
+     * @var Accompagnement
+     *
+     * @ORM\ManyToMany(targetEntity="TFE\LibrairieBundle\Entity\Accompagnement", inversedBy="livres")
+     */
+    private $accompagnements;
+
+    /**
+     * @var Commentaire
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Commentaire", mappedBy="livre")
+     */
+    private $commentaires;
+
+    /**
+     * @var Note
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Note", mappedBy="livre")
+     */
+    private $notes;
+
+    /**
+     * @var Auteur
+     *
+     * @ORM\ManyToMany(targetEntity="TFE\LibrairieBundle\Entity\Auteur", inversedBy="livres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auteurs;
+
+    /**
+     * @var Categorie
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Categorie", inversedBy="livres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $categorie;
+
+    /**
+     * @var Format
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Format", inversedBy="livres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $format;
+
+    /**
+     * @var Collection
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Collection", inversedBy="livres")
+     */
+    private $collection;
+
+    /**
+     * @var Edition
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Edition", inversedBy="livres")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $edition;
+
+    /**
+     * @var LivreCommande
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\LivreCommande", mappedBy="livre")
+     */
+    private $livreCommandes;
+
+    /**
+     * @var LivreNoteCredit
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\LivreNoteCredit", mappedBy="livre")
+     */
+    private $livreNoteCredits;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set codeIsbn
+     *
+     * @param integer $codeIsbn
+     * @return Livre
+     */
+    public function setCodeIsbn($codeIsbn)
+    {
+        $this->codeIsbn = $codeIsbn;
+
+        return $this;
+    }
+
+    /**
+     * Get codeIsbn
+     *
+     * @return integer 
+     */
+    public function getCodeIsbn()
+    {
+        return $this->codeIsbn;
+    }
+
+    /**
+     * Set titre
+     *
+     * @param string $titre
+     * @return Livre
+     */
+    public function setTitre($titre)
+    {
+        $this->titre = $titre;
+
+        return $this;
+    }
+
+    /**
+     * Get titre
+     *
+     * @return string 
+     */
+    public function getTitre()
+    {
+        return $this->titre;
+    }
+
+    /**
+     * Set soustitre
+     *
+     * @param string $soustitre
+     * @return Livre
+     */
+    public function setSoustitre($soustitre)
+    {
+        $this->soustitre = $soustitre;
+
+        return $this;
+    }
+
+    /**
+     * Get soustitre
+     *
+     * @return string 
+     */
+    public function getSoustitre()
+    {
+        return $this->soustitre;
+    }
+
+    /**
+     * Set anneeParution
+     *
+     * @param \DateTime $anneeParution
+     * @return Livre
+     */
+    public function setAnneeParution($anneeParution)
+    {
+        $this->anneeParution = $anneeParution;
+
+        return $this;
+    }
+
+    /**
+     * Get anneeParution
+     *
+     * @return \DateTime 
+     */
+    public function getAnneeParution()
+    {
+        return $this->anneeParution;
+    }
+
+    /**
+     * Set urlLivre
+     *
+     * @param string $urlLivre
+     * @return Livre
+     */
+    public function setUrlLivre($urlLivre)
+    {
+        $this->urlLivre = $urlLivre;
+
+        return $this;
+    }
+
+    /**
+     * Get urlLivre
+     *
+     * @return string 
+     */
+    public function getUrlLivre()
+    {
+        return $this->urlLivre;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     * @return Livre
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string 
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set teteAffiche
+     *
+     * @param boolean $teteAffiche
+     * @return Livre
+     */
+    public function setTeteAffiche($teteAffiche)
+    {
+        $this->teteAffiche = $teteAffiche;
+
+        return $this;
+    }
+
+    /**
+     * Get teteAffiche
+     *
+     * @return boolean 
+     */
+    public function getTeteAffiche()
+    {
+        return $this->teteAffiche;
+    }
+
+    /**
+     * Set aVenir
+     *
+     * @param boolean $aVenir
+     * @return Livre
+     */
+    public function setAVenir($aVenir)
+    {
+        $this->aVenir = $aVenir;
+
+        return $this;
+    }
+
+    /**
+     * Get aVenir
+     *
+     * @return boolean 
+     */
+    public function getAVenir()
+    {
+        return $this->aVenir;
+    }
+
+    /**
+     * Set prixVenteHtva
+     *
+     * @param float $prixVenteHtva
+     * @return Livre
+     */
+    public function setPrixVenteHtva($prixVenteHtva)
+    {
+        $this->prixVenteHtva = $prixVenteHtva;
+
+        return $this;
+    }
+
+    /**
+     * Get prixVenteHtva
+     *
+     * @return float 
+     */
+    public function getPrixVenteHtva()
+    {
+        return $this->prixVenteHtva;
+    }
+
+    /**
+     * Set tvaLivre
+     *
+     * @param float $tvaLivre
+     * @return Livre
+     */
+    public function setTvaLivre($tvaLivre)
+    {
+        $this->tvaLivre = $tvaLivre;
+
+        return $this;
+    }
+
+    /**
+     * Get tvaLivre
+     *
+     * @return float 
+     */
+    public function getTvaLivre()
+    {
+        return $this->tvaLivre;
+    }
+
+    /**
+     * Set ristourne
+     *
+     * @param float $ristourne
+     * @return Livre
+     */
+    public function setRistourne($ristourne)
+    {
+        $this->ristourne = $ristourne;
+
+        return $this;
+    }
+
+    /**
+     * Get ristourne
+     *
+     * @return float 
+     */
+    public function getRistourne()
+    {
+        return $this->ristourne;
+    }
+
+    /**
+     * Set nbrVente
+     *
+     * @param integer $nbrVente
+     * @return Livre
+     */
+    public function setNbrVente($nbrVente)
+    {
+        $this->nbrVente = $nbrVente;
+
+        return $this;
+    }
+
+    /**
+     * Get nbrVente
+     *
+     * @return integer 
+     */
+    public function getNbrVente()
+    {
+        return $this->nbrVente;
+    }
+
+    /**
+     * Set stock
+     *
+     * @param integer $stock
+     * @return Livre
+     */
+    public function setStock($stock)
+    {
+        $this->stock = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Get stock
+     *
+     * @return integer 
+     */
+    public function getStock()
+    {
+        return $this->stock;
+    }
+
+    /**
+     * Set seuilAlerte
+     *
+     * @param integer $seuilAlerte
+     * @return Livre
+     */
+    public function setSeuilAlerte($seuilAlerte)
+    {
+        $this->seuilAlerte = $seuilAlerte;
+
+        return $this;
+    }
+
+    /**
+     * Get seuilAlerte
+     *
+     * @return integer 
+     */
+    public function getSeuilAlerte()
+    {
+        return $this->seuilAlerte;
+    }
+
+    /**
+     * Add accompagnements
+     *
+     * @param \TFE\LibrairieBundle\Entity\Accompagnement $accompagnements
+     * @return Livre
+     */
+    public function addAccompagnement(\TFE\LibrairieBundle\Entity\Accompagnement $accompagnements)
+    {
+        $this->accompagnements[] = $accompagnements;
+
+        return $this;
+    }
+
+    /**
+     * Remove accompagnements
+     *
+     * @param \TFE\LibrairieBundle\Entity\Accompagnement $accompagnements
+     */
+    public function removeAccompagnement(\TFE\LibrairieBundle\Entity\Accompagnement $accompagnements)
+    {
+        $this->accompagnements->removeElement($accompagnements);
+    }
+
+    /**
+     * Get accompagnements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAccompagnements()
+    {
+        return $this->accompagnements;
+    }
+
+    /**
+     * Add commentaires
+     *
+     * @param \TFE\LibrairieBundle\Entity\Commentaire $commentaires
+     * @return Livre
+     */
+    public function addCommentaire(\TFE\LibrairieBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires[] = $commentaires;
+
+        return $this;
+    }
+
+    /**
+     * Remove commentaires
+     *
+     * @param \TFE\LibrairieBundle\Entity\Commentaire $commentaires
+     */
+    public function removeCommentaire(\TFE\LibrairieBundle\Entity\Commentaire $commentaires)
+    {
+        $this->commentaires->removeElement($commentaires);
+    }
+
+    /**
+     * Get commentaires
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCommentaires()
+    {
+        return $this->commentaires;
+    }
+
+    /**
+     * Add notes
+     *
+     * @param \TFE\LibrairieBundle\Entity\Note $notes
+     * @return Livre
+     */
+    public function addNote(\TFE\LibrairieBundle\Entity\Note $notes)
+    {
+        $this->notes[] = $notes;
+
+        return $this;
+    }
+
+    /**
+     * Remove notes
+     *
+     * @param \TFE\LibrairieBundle\Entity\Note $notes
+     */
+    public function removeNote(\TFE\LibrairieBundle\Entity\Note $notes)
+    {
+        $this->notes->removeElement($notes);
+    }
+
+    /**
+     * Get notes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotes()
+    {
+        return $this->notes;
+    }
+
+    /**
+     * Add auteurs
+     *
+     * @param \TFE\LibrairieBundle\Entity\Auteur $auteurs
+     * @return Livre
+     */
+    public function addAuteur(\TFE\LibrairieBundle\Entity\Auteur $auteurs)
+    {
+        $this->auteurs[] = $auteurs;
+
+        return $this;
+    }
+
+    /**
+     * Remove auteurs
+     *
+     * @param \TFE\LibrairieBundle\Entity\Auteur $auteurs
+     */
+    public function removeAuteur(\TFE\LibrairieBundle\Entity\Auteur $auteurs)
+    {
+        $this->auteurs->removeElement($auteurs);
+    }
+
+    /**
+     * Get auteurs
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAuteurs()
+    {
+        return $this->auteurs;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \TFE\LibrairieBundle\Entity\Categorie $categorie
+     * @return Livre
+     */
+    public function setCategorie(\TFE\LibrairieBundle\Entity\Categorie $categorie)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \TFE\LibrairieBundle\Entity\Categorie 
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * Set format
+     *
+     * @param \TFE\LibrairieBundle\Entity\Format $format
+     * @return Livre
+     */
+    public function setFormat(\TFE\LibrairieBundle\Entity\Format $format)
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * Get format
+     *
+     * @return \TFE\LibrairieBundle\Entity\Format 
+     */
+    public function getFormat()
+    {
+        return $this->format;
+    }
+
+    /**
+     * Set colletion
+     *
+     * @param \TFE\LibrairieBundle\Entity\Collection $colletion
+     * @return Livre
+     */
+    public function setCollection(\TFE\LibrairieBundle\Entity\Collection $collection = null)
+    {
+        $this->collection = $collection;
+
+        return $this;
+    }
+
+    /**
+     * Get colletion
+     *
+     * @return \TFE\LibrairieBundle\Entity\Collection 
+     */
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
+     * Set edition
+     *
+     * @param \TFE\LibrairieBundle\Entity\Edition $edition
+     * @return Livre
+     */
+    public function setEdition(\TFE\LibrairieBundle\Entity\Edition $edition)
+    {
+        $this->edition = $edition;
+
+        return $this;
+    }
+
+    /**
+     * Get edition
+     *
+     * @return \TFE\LibrairieBundle\Entity\Edition 
+     */
+    public function getEdition()
+    {
+        return $this->edition;
+    }
+
+    /**
+     * Add livreCommandes
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes
+     * @return Livre
+     */
+    public function addLivreCommande(\TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes)
+    {
+        $this->livreCommandes[] = $livreCommandes;
+
+        return $this;
+    }
+
+    /**
+     * Remove livreCommandes
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes
+     */
+    public function removeLivreCommande(\TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes)
+    {
+        $this->livreCommandes->removeElement($livreCommandes);
+    }
+
+    /**
+     * Get livreCommandes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLivreCommandes()
+    {
+        return $this->livreCommandes;
+    }
+
+    /**
+     * Add livreNoteCredits
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreNoteCredit $livreNoteCredits
+     * @return Livre
+     */
+    public function addLivreNoteCredit(\TFE\LibrairieBundle\Entity\LivreNoteCredit $livreNoteCredits)
+    {
+        $this->livreNoteCredits[] = $livreNoteCredits;
+
+        return $this;
+    }
+
+    /**
+     * Remove livreNoteCredits
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreNoteCredit $livreNoteCredits
+     */
+    public function removeLivreNoteCredit(\TFE\LibrairieBundle\Entity\LivreNoteCredit $livreNoteCredits)
+    {
+        $this->livreNoteCredits->removeElement($livreNoteCredits);
+    }
+
+    /**
+     * Get livreNoteCredits
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLivreNoteCredits()
+    {
+        return $this->livreNoteCredits;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrixTtc()
+    {
+        return round( ($this->getPrixVenteHtva() * (1 - ($this->getRistourne() / 100)) )* (1 + ($this->getTvaLivre() / 100)), 2);
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getPrixTotalTTC()
+    {
+        $prix = 0;
+
+        $prix += $this->getPrixTtc();
+
+        $accompagnements = $this->getAccompagnements();
+        foreach ($accompagnements as $accompagnement)
+        {
+            $prix += $accompagnement->getPrixTTC();
+        }
+
+        return $prix;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->photo ? null : $this->getUploadRootDir().'/'.$this->photo;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->photo ? null : $this->getUploadDir().'/'.$this->photo;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // le chemin absolu du répertoire où les documents uploadés doivent être sauvegardés
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // on se débarrasse de « __DIR__ » afin de ne pas avoir de problème lorsqu'on affiche
+        // le document/image dans la vue.
+        return 'uploads/documents';
+    }
+}

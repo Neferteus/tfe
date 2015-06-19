@@ -1,0 +1,74 @@
+<htlm>
+    <head>
+        <meta charset="utf-8">
+        <style>
+            #infoClient{text-align: right;}
+            #totalLigne{text-align: right;}
+            #totalFacture{font-size: 1.1em; font-weight: bold; text-align: right;}
+        </style>
+    </head>
+    <body>
+        {% block header %}
+            <img src="{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset('general/logo.jpg') }}" alt="logo"><br />
+
+            <div id="info">
+                <div id="infoSociete">
+                    Le Mille-Feuilles s.a. - 68 Rue des Tulipes 7020 Nimy(Belgique)<br />
+                    Tél : 065 46 56 98 - Fax : 065 157 684 - Tva : BE 0455 864 455<br />
+                    Banque : 260 – 0685 952 – 33<br />
+                </div>
+                <div id="infoClient">
+                    {{ commande.utilisateur.nom }} {{ commande.utilisateur.prenom }}<br />
+                    {{ commande.adresse.rue }} {{ commande.adresse.numero }}<br />
+                    {{ commande.adresse.ville.codePostal }} {{ commande.adresse.ville.localite }}<br />
+                    {{ commande.adresse.ville.pays.nomPays }}
+                </div>
+            </div>
+        {% endblock %}
+
+        <br />
+        <br />
+        <br />
+
+        {% block content %}
+            <div id="commande">
+                Numéro de la commande : {{ commande.nrCommande }}<br />
+                {% for ligne in commande.livreCommandes %}
+                    <p>
+                        <div id="totalLigne">
+
+                            {% set prixLivre = ligne.livre.prixVenteHtva * ( 1 - (ligne.livre.ristourne / 100)) %}
+                            {# Prix HTVA : {{ prixLivre * ligne.quantite|number_format(2,',', ' ') }} € - Montant TVA : {{ ((prixLivre * ligne.livre.tvaLivre / 100)|number_format(2) * ligne.quantite)|number_format(2,',', ' ') }} € #}
+                            Prix HTVA : {{ (ligne.prixVenteFinalHtva * ligne.quantite)|number_format(2,',', ' ')}} € - Montant TVA : {{ (ligne.tvaVente * ligne.quantite)|number_format(2,',', ' ') }} €
+                        </div>
+                        <div>
+                            Code ISBN : {{ ligne.livre.codeIsbn }} - Titre : {{ ligne.livre.titre }} - Ristourne : {{ ligne.livre.ristourne }} %<br />
+                            Prix HTVA : {{ prixLivre }} € - TVA ({{ ligne.livre.tvaLivre }}%) : {{ (prixLivre * ligne.livre.tvaLivre / 100)|number_format(2, ',', ' ') }} - Quantité : {{ ligne.quantite }}<br />
+                            <div>
+                                {% for fourniture in ligne.livre.accompagnements %}
+                                    {% if loop.first %}Accompagnement :<br />{% endif %}
+                                    {% set prixAcc = (fourniture.prixHtvaAcc * ( 1 - (ligne.livre.ristourne / 100)))|number_format(2) %}
+                                    {{ fourniture.nomAcc }} ({{ ligne.quantite }}pcs) - Prix HTVA : {{ (prixAcc * ligne.quantite)|number_format(2, ',', ' ') }} € - TVA ({{ fourniture.tvaAcc|number_format(2, ',', ' ') }}%) : {{ (((prixAcc|number_format(2) * (fourniture.tvaAcc / 100))|number_format(2)) * ligne.quantite)|number_format(2, ',', ' ') }} €<br />
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </p>
+                {% endfor %}
+            </div>
+
+            <br />
+
+            <div>
+                Frais de livraison :<br />
+                Prix de la livraison HTVA : {{ commande.modeLivraison.prixModeLivraisonHtva|number_format(2, ',', ' ') }} €
+                TVA de la livraison ({{ commande.modeLivraison.tvaModeLivraison }}%): {{ commande.modeLivraison.montantTva|number_format(2, ',', ' ') }} €
+            </div>
+
+            <br />
+
+            <div id="totalFacture">
+                Total de la facture : {{ commande.totalLigneCommandeTTC|number_format(2, ',', ' ') }} €
+            </div>
+        {% endblock %}
+    </body>
+</htlm>

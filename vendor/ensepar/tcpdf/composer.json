@@ -1,0 +1,37 @@
+{
+	"name": "ensepar/tcpdf",
+	"version": "5.0.003",
+	"homepage": "http://www.tcpdf.org/",
+	"type": "library",
+	"description": "TCPDF is a PHP class for generating PDF documents.",
+	"keywords": ["pdf","tcpdf"],
+	"license": "LGPLv3",
+	"authors": [
+	{
+		"name": "Nicola Asuni",
+		"email": "info@tecnick.com",
+		"homepage": "http://nicolaasuni.tecnick.com"
+	},
+	{
+		"name": "Tristan Maindron",
+		"email": "tmaindron@gmail.com",
+		"homepage": "http://www.github.com/OwlyCode"
+	}
+	],
+	"require": {
+		"php": ">=5.3.0"
+	},
+	"autoload": {
+		"classmap": [
+		"fonts",
+		"config/lang",
+		"config",
+		"2dbarcodes.php",
+		"barcodes.php",
+		"htmlcolors.php",
+		"qrcode.php",
+		"tcpdf.php",
+		"unicode_data.php"		
+		]
+	}
+}

@@ -1,0 +1,37 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pays
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\PaysRepository")
+ */
+class Pays
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomPays", type="string", length=40)
+     */
+    private $nomPays;
+
+    /**
+     * @var Ville
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Ville", mappedBy="pays")
+     */
+    private $villes;
+}

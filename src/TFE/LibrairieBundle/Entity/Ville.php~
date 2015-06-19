@@ -1,0 +1,52 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Ville
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\VilleRepository")
+ */
+class Ville
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="codePostal", type="string", length=15)
+     */
+    private $codePostal;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="localite", type="string", length=40)
+     */
+    private $localite;
+
+    /**
+     * @var Pays
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Pays", inversedBy="villes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private  $pays;
+
+    /**
+     * @var Adresse
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Adresse", mappedBy="ville")
+     */
+    private $adresses;
+}

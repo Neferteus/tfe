@@ -1,0 +1,58 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% form_theme form '@TFELibrairie/utilitaire/fields.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron" align="center">
+        <h3>Attribuer une récompense</h3>
+    </div>
+
+    <div class="well col-sm-offset-2 col-sm-8">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.auteur,"Auteur" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.auteur) }}
+            </div>
+            {{ form_widget(form.auteur, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.recompense,"Récompense" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.recompense) }}
+            </div>
+            {{ form_widget(form.recompense, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_label(form.anneeDistinction,"Année de distinction" ,{'label_attr' : {'class': 'control-label'} }) }}
+                </div>
+                <div class="col-sm-8">
+                    {{ form_errors(form.anneeDistinction) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_widget(form.anneeDistinction.year, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.anneeDistinction.day, {'attr' : {'class': 'form-control', 'style': 'display:none;'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.anneeDistinction.month, {'attr' : {'class': 'form-control', 'style': 'display:none;'}}) }}
+                </div>
+
+            </div>
+        </div>
+        {{ form_widget(form.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+        <a href="{{ path('admin_auteur_liste') }}"><button class="btn btn-danger" type="button">Annuler</button></a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

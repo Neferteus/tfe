@@ -1,0 +1,22 @@
+# chemin: /admin/edition
+
+admin_edition_liste:
+    path:     /
+    defaults: { _controller: TFELibrairieBundle:AdminEdition:liste }
+
+admin_edition_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminEdition:ajouter }
+
+admin_edition_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminEdition:modifier }
+    requirements:
+        id: \d*
+
+admin_edition_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminEdition:supprimer }
+    requirements:
+        id: \d*
+

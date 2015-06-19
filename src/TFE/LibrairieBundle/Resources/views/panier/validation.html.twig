@@ -1,0 +1,105 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Panier validation - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2 align="center">Validation des paramètres</h2>
+        </div>
+    </div>
+
+    {% if app.session.get('panier')|length == 0 %}
+        <div class="well col-sm-6">
+            Votre panier est vide.<br />
+            Cliquez <a href="{{ path('tfe_librairie_accueil') }}">ici</a> pour continuer vos achats
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="well col-sm-offset-3 col-sm-6 col-sm-offset-3">
+                {{ form_start(form, {'attr': {'class': 'form-horizontal', 'onsubmit' : "desactiver()"}}) }}
+                {{ form_errors(form) }}
+                <legend>Options de la commande</legend>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.modeLivraison,"Mode de livraison :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.modeLivraison) }}
+                    </div>
+                    {{ form_widget(form.modeLivraison, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.modePaiement,"Mode de paiement :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.modePaiement) }}
+                    </div>
+                    {{ form_widget(form.modePaiement, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <legend>Adresse de livraison</legend>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.adresse.rue,"Rue :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.adresse.rue) }}
+                    </div>
+                    {{ form_widget(form.adresse.rue, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.adresse.numero,"Numéro :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.adresse.numero) }}
+                    </div>
+                    {{ form_widget(form.adresse.numero, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.adresse.ville.codePostal,"Code postal :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.adresse.ville.codePostal) }}
+                    </div>
+                    {{ form_widget(form.adresse.ville.codePostal, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.adresse.ville.localite,"Localité :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.adresse.ville.localite) }}
+                    </div>
+                    {{ form_widget(form.adresse.ville.localite, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.adresse.ville.pays,"Pays :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.adresse.ville.pays) }}
+                    </div>
+                    {{ form_widget(form.adresse.ville.pays, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+                {{ form_widget(form.sauvegarder, {'attr': {'class' : 'btn btn-primary', 'id' : "boutonValider"}}) }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        function desactiver() {
+            var bouton = $("#boutonValider");
+            bouton.attr('disabled', 'disabled');
+            bouton.value = "Envoi...";
+        }
+    </script>
+{% endblock %}

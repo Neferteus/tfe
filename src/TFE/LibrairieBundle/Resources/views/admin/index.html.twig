@@ -1,0 +1,22 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Accueil{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row well">
+                <legend>Utilisateur</legend>
+                <p>Nombre total d'utilisateurs actifs : {{ infos.utilisateursActifs }}</p>
+                <p>Nombre total d'utilisateurs inactifs : {{ infos.utilisateursInactifs }}</p>
+                <p>Nombre total d'inscrits ce mois : {{ infos.utilisateursMois }}</p>
+            </div>
+        </div>
+        <div class="col-md-offset-2 col-md-5">
+            <div class="row well">
+                <legend>Commande</legend>
+            </div>
+        </div>
+    </div>
+    A suivre ...
+{% endblock %}

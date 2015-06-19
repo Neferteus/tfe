@@ -1,0 +1,19 @@
+# /livre
+
+livre_info:
+    path:     /info/{id}
+    defaults: { _controller: TFELibrairieBundle:Livre:info }
+    requirements:
+        id: \d+
+
+livre_info_promo:
+    path:     /promo/info/{id}
+    defaults: { _controller: TFELibrairieBundle:Livre:promoInfo }
+    requirements:
+        id: \d+
+
+livre_recherche:
+    path:     /recherche
+    defaults: { _controller: TFELibrairieBundle:Livre:recherche }
+    requirements:
+        methods: POST

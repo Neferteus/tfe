@@ -1,0 +1,149 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Utilisateur
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\UtilisateurRepository")
+ */
+class Utilisateur
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(name="username", type="string", length=255, unique=true)
+     */
+    private $username;
+
+    /**
+     * @ORM\Column(name="password", type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="salt", type="string", length=255)
+     */
+    private $salt;
+
+    /**
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles = array();
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=50)
+     */
+    private $nom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenom", type="string", length=50)
+     */
+    private $prenom;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telephone", type="string", length=25)
+     */
+    private $telephone;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNaissance", type="date")
+     */
+    private $dateNaissance;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="admin", type="boolean")
+     */
+    private $admin;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateInscription", type="datetime")
+     */
+    private $dateInscription;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="inscriptionValide", type="boolean")
+     */
+    private $inscriptionValide;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="accesNews", type="boolean")
+     */
+    private $accesNews;
+
+    /**
+     * @var Adresse
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Adresse", inversedBy="utilisateurs")
+     */
+    private $adresse;
+
+    /**
+     * @var Sexe
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Sexe", inversedBy="utilisateurs")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $sexe;
+
+    /**
+     * @var Commentaire
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Commentaire", mappedBy="utilisateur")
+     */
+    private $commentaires;
+
+    /**
+     * @var News
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\News", mappedBy="utilisateur")
+     */
+    private $news;
+
+    /**
+     * @var Note
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Note", mappedBy="utilisateur")
+     */
+    private $notes;
+
+    /**
+     * @var Commande
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Commande", mappedBy="utilisateur")
+     */
+    private $commandes;
+}

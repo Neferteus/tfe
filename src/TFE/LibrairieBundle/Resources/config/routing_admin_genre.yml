@@ -1,0 +1,22 @@
+# chemin: /admin/genre
+
+admin_genre_liste:
+    path:     /
+    defaults: { _controller: TFELibrairieBundle:AdminGenre:liste }
+
+admin_genre_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminGenre:ajouter }
+
+admin_genre_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminGenre:modifier }
+    requirements:
+        id: \d*
+
+admin_genre_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminGenre:supprimer }
+    requirements:
+        id: \d*
+

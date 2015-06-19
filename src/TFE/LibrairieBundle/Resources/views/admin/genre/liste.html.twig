@@ -1,0 +1,42 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Genre{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des genres</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    {% if genres|length == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de genre enregistré</h4>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="info">
+                <th class="col-sm-3">Intitulé</th>
+                <th class="col-sm-3">Outils</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for genre in genres %}
+                <tr>
+                    <td class="col-sm-3">{{ genre.nomGenre }}</td>
+                    <td class="col-sm-3">
+                        <a href="{{ path('admin_genre_modifier', {'id' : genre.id}) }}">Modifier</a> -
+                        <a href="{{ path('admin_genre_supprimer', {'id' : genre.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,51 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Facture
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\FactureRepository")
+ */
+class Facture
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nrFacture", type="string", length=30)
+     */
+    private $nrFacture;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateFacture", type="datetime")
+     */
+    private $dateFacture;
+
+    /**
+     * @var NoteCredit
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\NoteCredit", mappedBy="facture")
+     */
+    private $noteCredits;
+
+    /**
+     * @var Commande
+     *
+     * @ORM\OneToOne(targetEntity="TFE\LibrairieBundle\Entity\Commande", mappedBy="facture")
+     */
+    private $commande;
+}

@@ -1,0 +1,481 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
+/**
+ * Commande
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\CommandeRepository")
+ *
+ * @UniqueEntity(
+ *      fields = "nrCommande",
+ *      message = "N° de commande existant."
+ * )
+ */
+class Commande
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nrCommande", type="string", length=20, unique=true)
+     *
+     * @Assert\Length(
+     *      max = "20",
+     *      maxMessage = "Max. {{ limit }} caractères"
+     * )
+     */
+    private $nrCommande;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCommande", type="datetime")
+     *
+     * @Assert\DateTime(message = "Veuillez encoder une date correcte.")
+     */
+    private $dateCommande;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="enAttente", type="boolean")
+     *
+     * @Assert\Type(
+     *      type = "bool",
+     *      message = "Type non valide."
+     * )
+     */
+    private $enAttente;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="envoye", type="boolean")
+     *
+     * @Assert\Type(
+     *      type = "bool",
+     *      message = "Type non valide."
+     * )
+     */
+    private $envoye;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="annule", type="boolean")
+     *
+     * @Assert\Type(
+     *      type = "bool",
+     *      message = "Type non valide."
+     * )
+     */
+    private $annule;
+
+    /**
+     * @var LivreCommande
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\LivreCommande", mappedBy="commande")
+     *
+     */
+    private $livreCommandes;
+
+    /**
+     * @var Facture
+     *
+     * @ORM\OneToOne(targetEntity="TFE\LibrairieBundle\Entity\Facture", inversedBy="commande")
+     *
+     */
+    private $facture;
+
+    /**
+     * @var ModeLivraison
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\ModeLivraison", inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\notBlank(message = "Veuillez remplir ce champ")
+     */
+    private $modeLivraison;
+
+    /**
+     * @var ModePaiement
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\ModePaiement", inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\notBlank(message = "Veuillez remplir ce champ")
+     */
+    private $modePaiement;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\UserBundle\Entity\Utilisateur", inversedBy="commandes")
+     * @ORM\JoinColumn(nullable=false)
+     *
+     */
+    private $utilisateur;
+
+    /**
+     * @var Adresse
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Adresse", inversedBy="commandes", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     *
+     * @Assert\notBlank(message = "Veuillez remplir ce champ")
+     */
+    private $adresse;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->livreCommandes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * @return float / montant total des lignes de commandes HTVA
+     *
+     */
+    public function getTotalLigneCommandeHtva()
+    {
+        $total = 0.0;
+        foreach($this->getLivreCommandes() as $ligneCommande)
+        {
+            $total += $ligneCommande->getprixVenteFinalHtva();
+        }
+
+        return $total;
+    }
+
+    /**
+     * @return float / montant total de la TVA des lignes de commandes
+     *
+     */
+    public function getTotalTVALigneCommande()
+    {
+        $total = 0.0;
+        foreach($this->getLivreCommandes() as $ligneCommande)
+        {
+            $total += $ligneCommande->getTvaVente();
+        }
+
+        return $total;
+    }
+
+    public function getTotalLigneCommande()
+    {
+        $total = 0.0;
+        foreach($this->getLivreCommandes() as $ligneCommande)
+        {
+            $total += $ligneCommande->getTotalLigneCommandeTTC();
+        }
+
+        return $total;
+    }
+
+    public function getTotalLigneCommandeTTC()
+    {
+        $total = 0.0;
+
+        $total += $this->getTotalLigneCommande();
+        $total += $this->getModeLivraison()->getPrixTTC();
+
+        return $total;
+    }
+
+
+
+
+
+    // ********** GETTER ET SETTER **********
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nrCommande
+     *
+     * @param string $nrCommande
+     * @return Commande
+     */
+    public function setNrCommande($nrCommande)
+    {
+        $this->nrCommande = $nrCommande;
+
+        return $this;
+    }
+
+    /**
+     * Get nrCommande
+     *
+     * @return string 
+     */
+    public function getNrCommande()
+    {
+        return $this->nrCommande;
+    }
+
+    /**
+     * Set dateCommande
+     *
+     * @param \DateTime $dateCommande
+     * @return Commande
+     */
+    public function setDateCommande($dateCommande)
+    {
+        $this->dateCommande = $dateCommande;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCommande
+     *
+     * @return \DateTime 
+     */
+    public function getDateCommande()
+    {
+        return $this->dateCommande;
+    }
+
+    /**
+     * Set enAttente
+     *
+     * @param boolean $enAttente
+     * @return Commande
+     */
+    public function setEnAttente($enAttente)
+    {
+        $this->enAttente = $enAttente;
+
+        return $this;
+    }
+
+    /**
+     * Get enAttente
+     *
+     * @return boolean 
+     */
+    public function getEnAttente()
+    {
+        return $this->enAttente;
+    }
+
+    /**
+     * Set envoye
+     *
+     * @param boolean $envoye
+     * @return Commande
+     */
+    public function setEnvoye($envoye)
+    {
+        $this->envoye = $envoye;
+
+        return $this;
+    }
+
+    /**
+     * Get envoye
+     *
+     * @return boolean 
+     */
+    public function getEnvoye()
+    {
+        return $this->envoye;
+    }
+
+    /**
+     * Set annule
+     *
+     * @param boolean $annule
+     * @return Commande
+     */
+    public function setAnnule($annule)
+    {
+        $this->annule = $annule;
+
+        return $this;
+    }
+
+    /**
+     * Get annule
+     *
+     * @return boolean 
+     */
+    public function getAnnule()
+    {
+        return $this->annule;
+    }
+
+    /**
+     * Add livreCommandes
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes
+     * @return Commande
+     */
+    public function addLivreCommande(\TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes)
+    {
+        $this->livreCommandes[] = $livreCommandes;
+
+        return $this;
+    }
+
+    /**
+     * Remove livreCommandes
+     *
+     * @param \TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes
+     */
+    public function removeLivreCommande(\TFE\LibrairieBundle\Entity\LivreCommande $livreCommandes)
+    {
+        $this->livreCommandes->removeElement($livreCommandes);
+    }
+
+    /**
+     * Get livreCommandes
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getLivreCommandes()
+    {
+        return $this->livreCommandes;
+    }
+
+    /**
+     * Set facture
+     *
+     * @param \TFE\LibrairieBundle\Entity\Facture $facture
+     * @return Commande
+     */
+    public function setFacture(\TFE\LibrairieBundle\Entity\Facture $facture = null)
+    {
+        $this->facture = $facture;
+
+        return $this;
+    }
+
+    /**
+     * Get facture
+     *
+     * @return \TFE\LibrairieBundle\Entity\Facture 
+     */
+    public function getFacture()
+    {
+        return $this->facture;
+    }
+
+    /**
+     * Set modeLivraison
+     *
+     * @param \TFE\LibrairieBundle\Entity\ModeLivraison $modeLivraison
+     * @return Commande
+     */
+    public function setModeLivraison(\TFE\LibrairieBundle\Entity\ModeLivraison $modeLivraison)
+    {
+        $this->modeLivraison = $modeLivraison;
+
+        return $this;
+    }
+
+    /**
+     * Get modeLivraison
+     *
+     * @return \TFE\LibrairieBundle\Entity\ModeLivraison 
+     */
+    public function getModeLivraison()
+    {
+        return $this->modeLivraison;
+    }
+
+    /**
+     * Set modePaiement
+     *
+     * @param \TFE\LibrairieBundle\Entity\ModePaiement $modePaiement
+     * @return Commande
+     */
+    public function setModePaiement(\TFE\LibrairieBundle\Entity\ModePaiement $modePaiement)
+    {
+        $this->modePaiement = $modePaiement;
+
+        return $this;
+    }
+
+    /**
+     * Get modePaiement
+     *
+     * @return \TFE\LibrairieBundle\Entity\ModePaiement 
+     */
+    public function getModePaiement()
+    {
+        return $this->modePaiement;
+    }
+
+    /**
+     * Set utilisateur
+     *
+     * @param \TFE\UserBundle\Entity\Utilisateur $utilisateur
+     * @return Commande
+     */
+    public function setUtilisateur(\TFE\UserBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Get utilisateur
+     *
+     * @return \TFE\UserBundle\Entity\Utilisateur 
+     */
+    public function getUtilisateur()
+    {
+        return $this->utilisateur;
+    }
+
+    /**
+     * Set adresse
+     *
+     * @param \TFE\LibrairieBundle\Entity\Adresse $adresse
+     * @return Commande
+     */
+    public function setAdresse(\TFE\LibrairieBundle\Entity\Adresse $adresse)
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * Get adresse
+     *
+     * @return \TFE\LibrairieBundle\Entity\Adresse 
+     */
+    public function getAdresse()
+    {
+        return $this->adresse;
+    }
+
+}

@@ -1,0 +1,52 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * NoteCredit
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\NoteCreditRepository")
+ */
+class NoteCredit
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nrNoteCredit", type="string", length=30)
+     */
+    private $nrNoteCredit;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNoteCredit", type="datetime")
+     */
+    private $dateNoteCredit;
+
+    /**
+     * @var LivreNoteCredit
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\LivreNoteCredit", mappedBy="noteCredit")
+     */
+    private $livreNoteCredits;
+
+    /**
+     * @var Facture
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Facture", inversedBy="noteCredits")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private  $facture;
+}

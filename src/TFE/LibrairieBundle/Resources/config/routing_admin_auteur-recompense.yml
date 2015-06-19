@@ -1,0 +1,5 @@
+# chemin: /admin/auteur-recompense
+
+admin_auteur_recompense_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminAuteurRecompense:ajouter }

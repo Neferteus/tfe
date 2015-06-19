@@ -1,0 +1,351 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% form_theme form '@TFELibrairie/utilitaire/fields.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron" align="center">
+        <h3>Ajouter un livre</h3>
+    </div>
+
+    <div class="well">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group ">
+                    <div class="col-sm-4">
+                        {{ form_label(form.codeIsbn,"ISBN" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.codeIsbn) }}
+                    </div>
+                    {{ form_widget(form.codeIsbn, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                {{ form_widget(form.teteAffiche) }} {{ form_label(form.teteAffiche,"À l'affiche") }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                {{ form_widget(form.aVenir) }} {{ form_label(form.aVenir,"À venir") }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.titre,"Titre" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.titre) }}
+                    </div>
+                    {{ form_widget(form.titre, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.soustitre,"Sous-Titre" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.soustitre) }}
+                    </div>
+                    {{ form_widget(form.soustitre, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.prixVenteHtva,"Prix Htva" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.prixVenteHtva) }}
+                    </div>
+                    {{ form_widget(form.prixVenteHtva, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.tvaLivre,"T.V.A." ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.tvaLivre) }}
+                    </div>
+                    {{ form_widget(form.tvaLivre, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.ristourne,"Ristourne" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.ristourne) }}
+                    </div>
+                    {{ form_widget(form.ristourne, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.nbrVente,"Livre vendu" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.nbrVente) }}
+                    </div>
+                    {{ form_widget(form.nbrVente, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.stock,"Stock" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.stock) }}
+                    </div>
+                    {{ form_widget(form.stock, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.seuilAlerte,"Seuil min." ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.seuilAlerte) }}
+                    </div>
+                    {{ form_widget(form.seuilAlerte, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.categorie,"Catégorie" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.categorie) }}
+                    </div>
+                    {{ form_widget(form.categorie, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.format,"Format" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.format) }}
+                    </div>
+                    {{ form_widget(form.format, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.collection,"Collection" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.collection) }}
+                    </div>
+                    {{ form_widget(form.collection, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.edition,"Édition" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.edition) }}
+                    </div>
+                    {{ form_widget(form.edition, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ form_label(form.anneeParution,"Date de sortie" ,{'label_attr' : {'class': 'control-label'} }) }}
+                        </div>
+                        <div class="col-sm-8">
+                            {{ form_errors(form.anneeParution) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ form_widget(form.anneeParution.day, {'attr' : {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_widget(form.anneeParution.month, {'attr' : {'class': 'form-control'}}) }}
+                        </div>
+                        <div class="col-sm-4">
+                            {{ form_widget(form.anneeParution.year, {'attr' : {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            {{ form_label(form.file,"Photo" ,{'label_attr' : {'class': 'control-label'} }) }}
+                        </div>
+                        <div class="col-sm-8">
+                            {{ form_errors(form.file) }}
+                        </div>
+                    </div>
+                    <br />
+                    {{ form_widget(form.file) }}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.accompagnements,"Accompagnement" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.accompagnements) }}
+                    </div>
+                    {{ form_widget(form.accompagnements, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+            <div class="col-sm-offset-1 col-sm-5">
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        {{ form_label(form.auteurs,"Auteur" ,{'label_attr' : {'class': 'control-label'} }) }}
+                    </div>
+                    <div class="col-sm-8">
+                        {{ form_errors(form.auteurs) }}
+                    </div>
+                    {{ form_widget(form.auteurs) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+        <a href="{{ path('admin_livre_liste') }}"><button class="btn btn-danger" type="button">Annuler</button></a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/tfelibrairie/js/adminLivre/ajoutLivre.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // On récupère la balise <div> en question qui contient l'attribut « data-prototype ».
+            var $container = $('div#tfe_librairiebundle_livre_ajout_auteurs');
+
+            // On ajoute un lien pour ajouter un nouvel auteur
+            var $lienAjout = $('<a href="#" id="ajout_auteur" class="btn btn-info"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter un Auteur</a>');
+            $container.append($lienAjout);
+
+            // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+            $lienAjout.click(function(e) {
+                ajouterAuteur($container);
+                e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                return false;
+            });
+
+            // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+            var index = $container.find(':input').length;
+
+            // On ajoute un premier champ directement s'il n'en existe pas déjà un.
+            if (index == 0) {
+                ajouterAuteur($container);
+            } else {
+                // On récupère depuis la variable container toutes les div enfant qu'elle contient (children('div'))
+                // et pour chacune d'entre elle (.each()), on ajoute un lien qui permet de la supprimer.
+                $container.children('div').each(function() {
+                    ajouterLienSuppression($(this));
+                });
+            }
+
+            // La fonction qui ajoute un auteur
+            function ajouterAuteur($container) {
+                // Dans le contenu de l'attribut « data-prototype », on remplace :
+                // - le texte "__name__label__" qu'il contient par le label du champ
+                // - le texte "__name__" qu'il contient par le numéro du champ
+                var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, '')
+                        .replace(/__name__/g, index));
+
+                // On ajoute au prototype un lien pour pouvoir supprimer l'auteur
+                ajouterLienSuppression($prototype);
+
+                // On ajoute le prototype modifié à la fin de la balise <div>
+                $container.append($prototype);
+
+                // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+                index++;
+            }
+
+            // La fonction qui ajoute un lien de suppression d'un auteur
+            function ajouterLienSuppression($prototype) {
+                // Création du lien
+                $lienSuppression = $('<a href="#" class="btn btn-danger col-sm-offset-1">Supprimer</a>');
+
+                // Ajout du lien
+                $prototype.append($lienSuppression);
+
+                // Ajout du listener sur le clic du lien
+                $lienSuppression.click(function(e) {
+                    // Lorsque quelqu'un clique sur le lien, on supprime le prototype, donc la div, qui disparaît alors de la page
+                    $prototype.remove();
+                    e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+                    return false;
+                });
+            }
+        });
+    </script>
+    <script type="text/javascript">
+        $(function(){
+            $('#tfe_librairiebundle_livre_ajout_format').autocomplete({
+                source: function(requete, reponse){
+                    var motcle = $('#tfe_librairiebundle_livre_ajout_format').val();
+                    $.ajax({
+                        type:"GET",
+                        url : "{{ path('admin_livre_ajout_format_ac') }}",
+                        dataType : 'json',
+                        data : {'motcle': motcle},
+                        success : function(donnee){
+                            reponse($.map(donnee, function(object){
+                                return object['nomFormat'];
+                            }));
+                        }
+                    });
+                },
+                minLength : 3
+            });
+        });
+    </script>
+{% endblock %}

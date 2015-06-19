@@ -1,0 +1,53 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - À commander{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des livres à commander</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+        <p>Informations : {{ message }}</p>
+        {% endfor %}
+        </p>
+    </div>
+
+    <div class="row col-sm-offset-1 col-sm-10">
+        {% if liste|length == 0 %}
+            <div class="jumbotron">
+                <h4 align="center">Pas de livres à commander</h4>
+            </div>
+        {% else %}
+            <div class="row">
+                {% for livre in liste %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">Titre : {{ livre.titre }}<span class="pull-right">Code ISBN : {{ livre.codeIsbn }}</span></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-3">Seuil minimum : {{ livre.seuilAlerte }}</div>
+                        <div class="col-sm-3">Quantite disponible : {{ livre.stock }}</div>
+                        <form method="post" action="{{ path('admin_livre_maj_stock', {'id': livre.id}) }}">
+                            <div class="form-inline col-sm-6 pull">
+                                <div class="input-group pull-right">
+                                    <input type="number" min="1" name="quantiteCommandee"  class="form-control" placeholder="Quantité commandée">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-success">Sauvegarder</button>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div><br />
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

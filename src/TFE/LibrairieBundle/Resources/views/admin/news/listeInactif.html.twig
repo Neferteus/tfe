@@ -1,0 +1,42 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - News{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2 align="center">Liste des News</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if listeNews is not defined %}
+            <div class="well col-sm-offset-3 col-sm-6"><h4 align="center">Pas de news à afficher</h4></div>
+        {% else %}
+            {% for news in listeNews %}
+                <div class="panel-primary">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            {{ news.titreNews }}
+                            <div class="pull-right">Auteur : {{ news.utilisateur.username }}.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    {{ news.texteNews|truncate(500, true, '...')|nl2br }}
+                    <a href="{{ path('admin_news_voir_inactif', {'id': news.id}) }}" class="pull-right"><span class="glyphicon glyphicon-arrow-right"></span> Voir l'article</a>
+                    <p class="help-block">Publié le {{ news.dateNews|date("m/d/Y") }} à {{ news.dateNews|date("g:i:s") }}.</p>
+                </div>
+
+            {% endfor %}
+            <div class="row">
+                {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

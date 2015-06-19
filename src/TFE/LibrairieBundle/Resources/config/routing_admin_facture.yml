@@ -1,0 +1,13 @@
+# chemin: /admin/facture
+
+admin_facture_liste:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminFacture:liste, page: 1 }
+    requirements:
+        page: \d*
+
+admin_facture_telechargement:
+    path:     /download/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminFacture:telechargement }
+    requirements:
+        id:   \d+

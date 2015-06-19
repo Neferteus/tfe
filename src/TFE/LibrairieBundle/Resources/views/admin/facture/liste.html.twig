@@ -1,0 +1,52 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Facture{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tfelibrairie/css/listeLivre.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des factures</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="row">
+    {% if pagination is not defined %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de factures sauvegardées</h4>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="row col-sm-offset-1 col-sm-10">
+                {% for facture in listeFactures %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                N° de la facture : {{ facture.id }}
+                                <a href="{{ path('admin_facture_telechargement', {'id': facture.id}) }}"><span class="glyphicon glyphicon-download pull-right col-sm-1" title="Télécharger"></span></a>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            N° de la commande : {{ facture.commande.nrCommande }}<br />
+                            Date de la facture : {{ facture.dateFacture|date('d-m-Y') }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row">
+            {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+        </div>
+    {% endif %}
+    </div>
+
+{% endblock %}

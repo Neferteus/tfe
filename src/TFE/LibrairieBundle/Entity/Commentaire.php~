@@ -1,0 +1,61 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Commentaire
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\CommentaireRepository")
+ */
+class Commentaire
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="texteCommentaire", type="text")
+     */
+    private $texteCommentaire;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateCommentaire", type="datetime")
+     */
+    private $dateCommentaire;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="blocageCom", type="boolean")
+     */
+    private $blocageCom;
+
+    /**
+     * @var Livre
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Livre", inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $livre;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\UserBundle\Entity\Utilisateur", inversedBy="commentaires")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $utilisateur;
+
+}

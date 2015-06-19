@@ -1,0 +1,63 @@
+# chemin: /admin
+
+# Pointeur vers le fichier gérant les routes utilisateurs de la partie admin
+admin_user:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_user.yml"
+    prefix:   /user
+
+admin_livre:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_livre.yml"
+    prefix:   /livre
+
+admin_genre:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_genre.yml"
+    prefix:   /genre
+
+admin_categorie:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_categorie.yml"
+    prefix:   /categorie
+
+admin_format:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_format.yml"
+    prefix:   /format
+
+admin_edition:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_edition.yml"
+    prefix:   /edition
+
+admin_collection:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_collection.yml"
+    prefix:   /collection
+
+admin_accompagnement:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_accompagnement.yml"
+    prefix:   /accompagnement
+
+admin_auteur:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_auteur.yml"
+    prefix:   /auteur
+
+admin_news:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_news.yml"
+    prefix:   /news
+
+admin_commande:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_commande.yml"
+    prefix:   /commande
+
+admin_facture:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_facture.yml"
+    prefix:   /facture
+
+admin_recompense:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_recompense.yml"
+    prefix:   /recompense
+
+admin_auteur_recompense:
+    resource: "@TFELibrairieBundle/Resources/config/routing_admin_auteur-recompense.yml"
+    prefix:   /auteur-recompense
+
+# Accueil de la partie admin
+admin_index:
+    path:     /
+    defaults: { _controller: TFELibrairieBundle:Admin:index }

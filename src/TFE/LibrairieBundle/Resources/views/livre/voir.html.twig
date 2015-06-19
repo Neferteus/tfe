@@ -1,0 +1,251 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Détail livre - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="panel-primary"><h2 class="panel-heading col-sm-4">En détail ...</h2></div>
+        <a href="{{ path('catalogue_accueil') }}" class=" col-sm-2 pull-right"><button class="btn btn-warning"><span class="glyphicon glyphicon-circle-arrow-left"></span> Retour</button></a>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            {% if (livre.photo) %}
+                <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" />
+            {% endif %}
+        </div>
+        <div class="col-sm-8">
+            <h3>{{ livre.titre }}</h3>
+            {{ livre.soustitre }}
+            {% for auteur in livre.auteurs %}
+                <h4>
+                    {% if loop.first %}
+                        {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                    {% else %}
+                        , {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                    {% endif %}
+                </h4>
+            {% endfor %}
+            <h6>editeur : {{ livre.edition.nomEdition }}</h6>
+            <h6>Paru le {{ livre.anneeParution|date('d-m-Y') }}</h6>
+            <h6>
+                Note :
+                {% if livre.moyenneNote %}
+                    {{ livre.moyenneNote }} / 5
+                {% else %}
+                    ~ / 5
+                {% endif %}
+            </h6>
+        </div>
+        <div class="col-sm-3">
+            <h3>Prix total : {{ livre.prixTotal }} €</h3>
+            <h4>Prix livre : {{ livre.PrixLivreHtvaAvecRistourne + livre.MontantTvaLivre }}</h4>
+            {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+        </div>
+    </div>
+    {% if livre.aVenir == 0 %}
+        <div class="row">
+            <div class="col-sm-6">
+                <form method="POST" action="{{ path('tfe_librairie_panier_maj', {'id': livre.id}) }}" class="form">
+                    <div class="form-group ">
+                        <label class="control-label" for="quantiteLivre">Entrez la quantité voulue :</label><br />
+                        <div class="col-sm-offset-1 col-sm-3">
+                            <input class="form-control" id="quantiteLivre" name="quantite" type="number" min="1" required="true">
+                        </div>
+                        <p>
+                            <input type="submit" class="btn btn-success" value="Mettre à jour le panier">
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            {% for key, ligne in app.session.get('panier') %}
+                {% if ligne.livre.id == livre.id %}
+                    <div class="col-sm-6">
+                        <strong>Quantité déjà présente dans le panier : {{ quantite }}</strong><br />
+                        <a href="{{ path('tfe_librairie_panier_enlever', {'id': key }) }}">
+                            <input type="button" class="btn btn-danger col-sm-offset-6" value="Retirer ce livre du panier">
+                        </a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="panel-primary"><h2 class="panel-heading col-sm-4">Inclus avec ce livre ...</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-sm-offset-1">
+            {% if (livre.accompagnements|length) > 0 %}
+                {% for accompagnement in livre.accompagnements %}
+                    <div class="row">
+                        <h4>{{ loop.index }}° {{ accompagnement.nomAcc }}<span class="pull-right col-sm-2">{{ (((accompagnement.prixHtvaAcc * (1 - (livre.ristourne/100)))|number_format(2)) * (1 + (accompagnement.tvaAcc/100))|number_format(2))|number_format(2) }} €</span></h4>
+                        <p class="help-block col-sm-offset-1 col-sm-9">{{ accompagnement.descriptionAcc }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h4>Aucun accompagnement</h4>
+            {% endif %}
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="panel panel-default col-sm-offset-1 col-sm-10">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#livreCommentaire" data-toggle="tab">Commentaire & Note</a></li>
+                <li><a href="#livreFiche" data-toggle="tab">Fiche détaillée</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="livreCommentaire">
+                    <br />
+                    <div class="row">
+                        {% if is_granted('ROLE_USER') %}
+                            <div class="well col-sm-offset-2 col-sm-8">
+                                {{ form_start(formCom, {'attr': {'class': 'form-horizontal'}}) }}
+                                {{ form_errors(formCom) }}
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="form-group ">
+                                            <div class="col-sm-6">
+                                                {{ form_label(formCom.texteCommentaire,"Ajouter un commentaire :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                {{ form_errors(formCom.texteCommentaire) }}
+                                            </div>
+                                            {{ form_widget(formCom.texteCommentaire, {'attr': {'class' : 'form-control col-sm-offset-3', 'rows' : 5}}) }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ form_widget(formCom.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+                                {{ form_rest(formCom) }}
+                                {{ form_end(formCom) }}
+                                <p>
+                                    {% for message in app.session.flashbag.get('commentaire') %}
+                                        <div class="alert col-sm-offset-1 col-sm-4 alert-success"><strong>{{ message }}</strong></div><br />
+                                    {% endfor %}
+                                </p>
+                            </div>
+                        <div class="well col-sm-offset-2 col-sm-8">
+                            {{ form_start(formNote, {'attr': {'class': 'form-horizontal'}}) }}
+                            {{ form_errors(formNote) }}
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="form-group ">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                {% if noteExiste is not null%}
+                                                    {{ form_label(formNote.etoile,"Changez votre note :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                                                {% else %}
+                                                    {{ form_label(formNote.etoile,"Mettez une note :" ,{'label_attr' : {'class': 'control-label'} }) }}
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-6">
+                                                {{ form_errors(formNote.etoile) }}
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-offset-1 col-sm-2">
+                                                {{ form_label(formNote.etoile[0],"1") }}
+                                                {{ form_widget(formNote.etoile[0]) }}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {{ form_label(formNote.etoile[1],"2") }}
+                                                {{ form_widget(formNote.etoile[1]) }}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {{ form_label(formNote.etoile[2],"3") }}
+                                                {{ form_widget(formNote.etoile[2]) }}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {{ form_label(formNote.etoile[3],"4") }}
+                                                {{ form_widget(formNote.etoile[3]) }}
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {{ form_label(formNote.etoile[4],"5") }}
+                                                {{ form_widget(formNote.etoile[4]) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{ form_widget(formNote.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+                            {{ form_rest(formNote) }}
+                            {{ form_end(formNote) }}
+                            <p>
+                                {% for message in app.session.flashbag.get('note') %}
+                            <div class="alert col-sm-offset-1 col-sm-4 alert-success"><strong>{{ message }}</strong></div><br />
+                            {% endfor %}
+                            </p>
+                        </div>
+                        {% else %}
+                        <div class="row col-sm-offset-1">
+                            Pour laisser un commentaire ou une note, <a href="{{ path('login') }}">Connectez-vous</a>.
+                        </div>
+                        {% endif %}
+                    </div>
+                    <br />
+                    <div class="row col-sm-offset-1">
+                        {% if (livre.commentaires|length) < 1 %}
+                            <h3>Soyez le premier à laisser un commentaire.</h3>
+                        {% else %}
+                            <dl class="col-sm-11">
+                                {% for commentaire in livre.commentaires %}
+                                    <dt>{{ commentaire.utilisateur.username }} a écrit :</dt>
+                                    <dd>{{ commentaire.texteCommentaire|nl2br }}</dd>
+                                    <p class="help-block col-sm-offset-1">Écrit le {{ commentaire.dateCommentaire|date('d-m-y') }} à {{ commentaire.dateCommentaire|date('H:i:s') }}.</p>
+                                {% endfor %}
+                            </dl>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="livreFiche">
+                    <br />
+                    <div class="row">
+                        <dl class="dl-horizontal">
+                            <dt>Code ISBN</dt>
+                            <dd>{{ livre.codeIsbn }}</dd>
+                            <dt>Titre</dt>
+                            <dd>{{ livre.titre }}</dd>
+                            <dt>Sous-titre</dt>
+                            <dd>
+                                {% if (livre.soustitre) is not null %}
+                                    {{ livre.soustitre }}
+                                {% else %}
+                                    ~
+                                {% endif %}
+                            </dd>
+                            <dt>Auteur</dt>
+                            <dd>
+                                {% for auteur in livre.auteurs %}
+                                    {% if loop.first %}
+                                        {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% else %}
+                                        , {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% endif %}
+                                {% endfor %}
+                            </dd>
+                            <dt>Éditeur</dt>
+                            <dd>{{ livre.edition.nomEdition }}</dd>
+                            <dt>Collection</dt>
+                            <dd>
+                                {% if (livre.collection|length) > 0 %}
+                                    {{ livre.collection.nomCollection }}
+                                {% else %}
+                                    ~
+                                {% endif %}
+                            </dd>
+                            <dt>Format</dt>
+                            <dd>{{ livre.format.nomFormat }}</dd>
+                            <dt>Genre</dt>
+                            <dd>{{ livre.categorie.genre.nomGenre }}</dd>
+                            <dt>Catégorie</dt>
+                            <dd>{{ livre.categorie.nomCategorie }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

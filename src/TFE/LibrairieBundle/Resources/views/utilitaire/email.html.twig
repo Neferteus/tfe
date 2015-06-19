@@ -1,0 +1,21 @@
+<body>
+    <h2>Bonjour {{ utilisateur.username }},</h2>
+    <p>
+        Votre demande d'inscription sur notre site a bien été prise en compte.
+    </p>
+    <p>
+        Vos informations personnelles :<br />
+        Nom : {{ utilisateur.nom }}<br />
+        Prénom : {{ utilisateur.prenom }}<br />
+        Adresse mail : {{ utilisateur.email }}
+    </p>
+    <p>
+        Il reste une dernière étape pour valider votre inscription. Cliquez sur le lien ci-dessous :
+    </p>
+    <a href="{{ url('confirmation') }}?user={{ utilisateur.username }}&code={{ utilisateur.codeActivation }}">
+        <h4>{{ url('confirmation') }}?user={{ utilisateur.username }}&code={{ utilisateur.codeActivation }}</h4>
+    </a>
+    <p>
+        Ceci est un mail automatique. Merci de ne pas y répondre.
+    </p>
+</body>

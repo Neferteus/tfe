@@ -1,0 +1,22 @@
+# chemin: /admin/categorie
+
+admin_categorie_liste:
+    path:     /
+    defaults: { _controller: TFELibrairieBundle:AdminCategorie:liste }
+
+admin_categorie_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminCategorie:ajouter }
+
+admin_categorie_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminCategorie:modifier }
+    requirements:
+        id: \d*
+
+admin_categorie_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminCategorie:supprimer }
+    requirements:
+        id: \d*
+

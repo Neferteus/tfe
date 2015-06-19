@@ -1,0 +1,51 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Accompagnement{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des accompagnements</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    {% if pagination.pages_count == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas d'accompagnement enregistré</h4>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="info">
+                <th class="col-sm-3">Intitulé</th>
+                <th class="col-sm-4">Description</th>
+                <th class="col-sm-1">Prix HTVA</th>
+                <th class="col-sm-1">TVA</th>
+                <th class="col-sm-1">Prix TTC</th>
+                <th class="col-sm-2">Outils</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for accompagnement in accompagnements %}
+                <tr>
+                    <td class="col-sm-3">{{ accompagnement.nomAcc }}</td>
+                    <td class="col-sm-4">{{ accompagnement.descriptionAcc }}</td>
+                    <td class="col-sm-1">{{ accompagnement.prixHtvaAcc|number_format(2) }} €</td>
+                    <td class="col-sm-1">{{ accompagnement.tvaAcc|number_format(2) }}</td>
+                    <td class="col-sm-1">{{ accompagnement.getPrixTTC|number_format(2) }} €</td>
+                    <td class="col-sm-2">
+                        <a href="{{ path('admin_accompagnement_modifier', {'id' : accompagnement.id}) }}">Modifier</a> -
+                        <a href="{{ path('admin_accompagnement_supprimer', {'id' : accompagnement.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - News{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2  align="center">Lecture de la News :</h2>
+            <h3  align="center">{{ news.titreNews }}</h3>
+            <h5 class="pull-right">Publié par {{ news.utilisateur.username }}</h5>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="panel-primary">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    {{ news.titreNews }}<a href="{{ path('admin_news_changer_validation', {'id': news.id}) }}" class="pull-right">Désactiver la news</a>
+                    <div class="pull-right"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+            {{ news.texteNews|nl2br }}
+            <p class="help-block">Publié le {{ news.dateNews|date("m/d/Y") }} à {{ news.dateNews|date("g:i") }}.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <a href="{{ path('admin_news_liste_valide') }}" class="pull-right">
+            <button class="btn btn-warning"><span class="glyphicon glyphicon-circle-arrow-left"></span> Retour</button>
+        </a>
+    </div>
+
+{% endblock %}

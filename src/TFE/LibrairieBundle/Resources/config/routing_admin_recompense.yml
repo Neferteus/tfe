@@ -1,0 +1,23 @@
+# chemin: /admin/recompense
+
+admin_recompense_liste:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminRecompense:liste, page: 1 }
+    requirements:
+        page: \d*
+
+admin_recompense_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminRecompense:ajouter }
+
+admin_recompense_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminRecompense:modifier }
+    requirements:
+        id:   \d+
+
+admin_recompense_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminRecompense:supprimer }
+    requirements:
+        id:   \d+

@@ -1,0 +1,31 @@
+<div align="center">
+    <ul class="pagination">
+        {# On affiche page précédente et première page si nous ne sommes pas sur la première page #}
+        {% if pagination.page > 1 %}
+            <li>
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': 1})) }}">Début</a>
+            </li>
+            <li>
+                <a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page-1})) }}">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+        {% endif %}
+
+        {# On affiche seulement page allant de p-4 à p+4 sans aller en dessous de 1 ou au-dessus de pages_count #}
+        {% for p in range(max(pagination.page-4, 1), min(pagination.page+4, pagination.pages_count)) %}
+            <li>
+                <a {% if p == pagination.page %}class="current-page"{% endif %} href="{{ path(pagination.route, pagination.route_params|merge({'page': p})) }}">
+                    {{ p }}
+                </a>
+            </li>
+        {% endfor %}
+
+        {# On affiche page suivante et dernière page si nous ne sommes pas sur la dernière page #}
+        {% if pagination.page < pagination.pages_count %}
+            <li><a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.page+1})) }}">&raquo;</a></li>
+            <li><a href="{{ path(pagination.route, pagination.route_params|merge({'page': pagination.pages_count})) }}">Fin</a></li>
+        {%  endif %}
+    </ul>
+</div>

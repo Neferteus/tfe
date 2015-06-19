@@ -1,0 +1,17 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Paypal - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        Votre commande est bien validée.<br />
+        Merci de votre achat.
+        <p>
+            <a href="{{ path('tfe_librairie_accueil') }}">
+                <button class="btn primary pull-right"><span class="glyphicon glyphicon-home"></span> Retour à l'accueil</button>
+            </a>
+        </p>
+    </div>
+{% endblock %}

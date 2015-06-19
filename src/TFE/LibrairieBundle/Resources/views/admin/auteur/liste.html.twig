@@ -1,0 +1,51 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Auteur{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des auteurs</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    {% if pagination.pages_count == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas d'auteur enregistré</h4>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="info">
+                <th class="col-sm-2">Nom</th>
+                <th class="col-sm-2">Prénom</th>
+                <th class="col-sm-2">Téléphone</th>
+                <th class="col-sm-2">Email</th>
+                <th class="col-sm-2">Date de Naissance</th>
+                <th class="col-sm-2">Outils</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for auteur in auteurs %}
+                <tr>
+                    <td class="col-sm-2">{{ auteur.nomAuteur }}</td>
+                    <td class="col-sm-2">{{ auteur.prenomAuteur }}</td>
+                    <td class="col-sm-2">{{ auteur.telephoneAuteur }}</td>
+                    <td class="col-sm-2">{{ auteur.emailAuteur|truncate(20,false,'...') }}</td>
+                    <td class="col-sm-2">{% if auteur.dateNaissanceAuteur is not empty %}{{ auteur.dateNaissanceAuteur|date('d-m-Y') }}{% endif %}</td>
+                    <td class="col-sm-2">
+                        <a href="{{ path('admin_auteur_modifier', {'id' : auteur.id}) }}">Modifier</a> -
+                        <a href="{{ path('admin_auteur_supprimer', {'id' : auteur.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+    {% endif %}
+
+{% endblock %}

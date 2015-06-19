@@ -1,0 +1,52 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Paypal - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="col-sm-7"><h5>Total de la commande HTVA</h5></div>
+        <div class="col-sm-4"><h5 class="pull-right">{{ commande.totalLigneCommandeHtva|number_format(2, ',', ' ') }} €</h5></div>
+
+        <div class="col-sm-7"><h5>TVA de la commande</h5></div>
+        <div class="col-sm-4"><h5 class="pull-right">{{ commande.totalTVALigneCommande|number_format(2, ',', ' ') }} €</h5></div>
+
+        <div class="col-sm-7"><h4 class="pull-right">Total de la commande</h4></div>
+        <div class="col-sm-5"><h4 class="pull-right">{{ commande.totalLigneCommande|number_format(2, ',', ' ') }} €</h4></div>
+
+        <div class="col-sm-7"><h5>Prix de la livraison HTVA</h5></div>
+        <div class="col-sm-4"><h5 class="pull-right">{{ commande.modeLivraison.prixModeLivraisonHtva|number_format(2, ',', ' ') }} €</h5></div>
+
+        <div class="col-sm-7"><h5>TVA de la livraison</h5></div>
+        <div class="col-sm-4"><h5 class="pull-right">{{ commande.modeLivraison.montantTva|number_format(2, ',', ' ') }} €</h5></div>
+
+        <div class="col-sm-7"><h4 class="pull-right">Coût de la livraison</h4></div>
+        <div class="col-sm-5"><h4 class="pull-right">{{ commande.modeLivraison.prixTTC|number_format(2, ',', ' ') }} €</h4></div>
+
+        <div class="col-sm-7"><h3 class="pull-right">Total TTC</h3></div>
+        <div class="col-sm-5"><h3 class="pull-right">{{ commande.totalLigneCommandeTTC|number_format(2, ',', ' ') }} €</h3></div>
+    </div>
+
+    <div class="row">
+        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+            <input type='hidden' value="{{ commande.totalLigneCommandeTTC|number_format(2, '.') }}" name="amount" />
+            <input name="currency_code" type="hidden" value="EUR" />
+            <input name="shipping" type="hidden" value="0.00" />
+            <input name="tax" type="hidden" value="0.00" />
+            <input name="return" type="hidden" value="{{ url('paypal_success') }}" />
+            <input name="cancel_return" type="hidden" value="{{ url('paypal_cancel') }}" />
+            <input name="notify_url" type="hidden" value="{{ url('paypal_ipn') }}" />
+            <input name="cmd" type="hidden" value="_xclick" />
+            <input name="business" type="hidden" value="ludovic.durand-facilitator@hotmail.be" />
+            <input name="item_name" type="hidden" value="{{ commande.nrCommande }}" />
+            <input name="no_note" type="hidden" value="1" />
+            <input name="lc" type="hidden" value="FR" />
+            <input name="bn" type="hidden" value="PP-BuyNowBF" />
+            <input name="custom" type="hidden" value="{{ commande.utilisateur.id }}" />
+            <p>
+                <input class="pull-right" alt="Effectuez vos paiements via PayPal : une solution rapide, gratuite et sécurisée" name="submit" src="https://www.paypal.com/fr_FR/FR/i/btn/btn_buynow_LG.gif" type="image" /><img src="https://www.paypal.com/fr_FR/i/scr/pixel.gif" border="0" alt="" width="1" height="1" />
+            </p>
+        </form>
+    </div>
+{% endblock %}

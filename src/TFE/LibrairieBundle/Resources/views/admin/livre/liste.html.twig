@@ -1,0 +1,94 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Livre{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tfelibrairie/css/listeLivre.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des livres</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="row">
+    {% if pagination.pages_count == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de livres en stock</h4>
+        </div>
+    {% else %}
+        <div class="row">
+            {% for livre in livres %}
+                <div class="panel-primary col-sm-6">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <p>
+                                <strong>Titre</strong> : {{ livre.titre }}
+                            </p>
+                            {# Activation du truncate dans le fichier app/config/config.yml => services #}
+                            <strong>Sous-titre</strong> : {% if (livre.soustitre) %}{{ livre.soustitre|truncate(50,true,'...') }}{% else %}~{% endif %}
+                        </h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                {% if (livre.photo) %}
+                                    <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" />
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-4">
+                                Prix livre HTVA :<br />
+                                Prix Acc. Livre :<br />
+                                Montant Tva livre :<br />
+                                Montant tva Acc. :<br />
+                                Ristourne :<br />
+                                Prix Final :<br />
+                            </div>
+                            <div class="col-sm-4">
+                                {% if(livre.ristourne) %}
+                                    <span id="prixBarre">{{ livre.prixVenteHtva|number_format(2, ',', '.') }}</span> {{ livre.prixLivreHtvaAvecRistourne|number_format(2, ',', '.') }} €<br />
+                                    <span id="prixBarre">{{ livre.prixAccompagnementHtvaSansRistourne|number_format(2, ',', '.') }}</span> {{ livre.prixAccompagnementHtvaAvecRistourne|number_format(2, ',', '.') }} €<br />
+                                {% else %}
+                                    {{ livre.prixLivreHtvaAvecRistourne|number_format(2, ',', '.') }} €<br />
+                                    {{ livre.prixAccompagnementHtvaAvecRistourne|number_format(2, ',', '.') }} €<br />
+                                {% endif %}
+                                {{ livre.montantTvaLivre|number_format(2, ',', '.') }} €<br />
+                                {{ livre.montantTvaAccompagnement|number_format(2, ',', '.') }} €<br />
+                                {{ livre.ristourne|number_format(2, ',', '.') }} %<br />
+                                {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                            </div>
+                            <div class="col-sm-1">
+                                <h4>
+                                    <p>
+                                        <a href="{{ path('admin_livre_modif', {'id' : livre.id}) }}">
+                                            <span class="glyphicon glyphicon-pencil" title="Modifier le livre"></span>
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="{{ path('admin_livre_supprimer', {'id' : livre.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">
+                                            <span class="glyphicon glyphicon-trash" title="Supprimer le livre"></span>
+                                        </a>
+                                    </p>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+        </div>
+    {% endif %}
+    </div>
+
+{% endblock %}

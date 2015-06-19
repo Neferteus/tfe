@@ -1,0 +1,137 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+
+{% block body %}
+    <div class="col-sm-offset-2 col-sm-8 well">
+        <legend><h3>Ajouter un utilisateur</h3></legend>
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.username,"Nom d'utilisateur" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.username) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.username, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.nom,"Nom" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.nom) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.nom, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.prenom,"Prénom" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.prenom) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.prenom, {'attr': {'class' : 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.password.first,"Mot de passe" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.password.first) }}
+                <div class=" col-sm-8">
+                    {{ form_widget(form.password.first, {'attr': {'class' : 'form-control input-sm'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.password.second,"Mot de passe(validation)" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.password.second) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.password.second, {'attr': {'class' : 'form-control input-sm'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.telephone,"Téléphone" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.telephone) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.telephone, {'attr': {'class' : 'form-control input-sm'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.email,"Email" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.email) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.email, {'attr': {'class' : 'form-control input-sm'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.dateNaissance,"Date de naissance" ,{'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.dateNaissance) }}
+                <div class="col-sm-8">
+                    <div class="col-sm-4">
+                        {{ form_widget(form.dateNaissance.day, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.dateNaissance.month, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-sm-4">
+                        {{ form_widget(form.dateNaissance.year, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.sexe, "Genre", {'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                {{ form_errors(form.sexe) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.sexe, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group">
+                {{ form_label(form.roles, "Rôles :", {'label_attr' : {'class': 'control-label col-sm-4'}}) }}
+                <div class="col-sm-8">
+                    {{ form_widget(form.roles.0) }}
+                    {{ form_label(form.roles.0, "Utilisateur", {'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_widget(form.roles.1) }}
+                    {{ form_label(form.roles.1, "Auteur", {'label_attr' : {'class': 'control-label'}}) }}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {{ form_widget(form.roles.2) }}
+                        {{ form_label(form.roles.2, "Vendeur", {'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_widget(form.roles.3) }}
+                        {{ form_label(form.roles.3, "Administrateur", {'label_attr' : {'class': 'control-label'}}) }}
+                    {% else %}
+                        {{ form_widget(form.roles.2, {'attr' : {'disabled' : 'true'}}) }}
+                        {{ form_label(form.roles.2, "Vendeur", {'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_widget(form.roles.3, {'attr' : {'disabled' : 'true'}}) }}
+                        {{ form_label(form.roles.3, "Administrateur", {'label_attr' : {'class': 'control-label'}}) }}
+                    {% endif %}
+                </div>
+            </div>            
+        </div>
+
+        <div class="row">
+            {{ form_widget(form.sauvegarder, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+            <a href="{{ path('admin_user_liste_actif') }}"><button class="btn btn-danger" type="button">Annuler</button></a>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

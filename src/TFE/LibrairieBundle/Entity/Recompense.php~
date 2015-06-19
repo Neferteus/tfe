@@ -1,0 +1,37 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Recompense
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\RecompenseRepository")
+ */
+class Recompense
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomRecompense", type="string", length=30)
+     */
+    private $nomRecompense;
+
+    /**
+     * @var AuteurRecompense
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\AuteurRecompense", mappedBy="recompense")
+     */
+    private $auteurRecompenses;
+}

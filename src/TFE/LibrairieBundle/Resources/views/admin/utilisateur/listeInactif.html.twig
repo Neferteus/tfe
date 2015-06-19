@@ -1,0 +1,43 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Utilisateur inactif{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des utilisateurs inactifs</h3>
+    </div>
+
+    {% if pagination.pages_count == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas d'utilisateurs inactifs</h4>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="info">
+                <th class="col-sm-3">Nom d'utilisateur</th>
+                <th class="col-sm-2">Nom</th>
+                <th class="col-sm-2">Prénom</th>
+                <th class="col-sm-2">Date d'inscription</th>
+                <th class="col-sm-3">Outils</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td class="col-sm-3">{{ utilisateur.username }}</td>
+                    <td class="col-sm-2">{{ utilisateur.nom }}</td>
+                    <td class="col-sm-2">{{ utilisateur.prenom }}</td>
+                    <td class="col-sm-2">{{ utilisateur.dateInscription|date('d-m-Y H:i:s') }}</td>
+                    <td class="col-sm-3">
+                        <a href="{{ path('admin_user_spprimer', {'id' : utilisateur.id}) }}" onclick="return confirm('Continuer la suppresion ?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+    {% endif %}
+
+{% endblock %}

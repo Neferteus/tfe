@@ -1,0 +1,44 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Categorie{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des catégories</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    {% if categories|length == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de catégorie enregistrée</h4>
+        </div>
+    {% else %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="info">
+                <th class="col-sm-3">Intitulé</th>
+                <th class="col-sm-3">Genre</th>
+                <th class="col-sm-3">Outils</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td class="col-sm-3">{{ categorie.nomCategorie }}</td>
+                    <td class="col-sm-3">{{ categorie.genre.nomGenre }}</td>
+                    <td class="col-sm-3">
+                        <a href="{{ path('admin_categorie_modifier', {'id' : categorie.id}) }}">Modifier</a> -
+                        <a href="{{ path('admin_categorie_supprimer', {'id' : categorie.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">Supprimer</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+{% endblock %}

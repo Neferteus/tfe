@@ -1,0 +1,51 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% form_theme form '@TFELibrairie/utilitaire/fields.html.twig' %}
+
+{% block body %}
+    <div class="well col-sm-offset-2 col-sm-8">
+        <legend>Ajouter un accompagnement</legend>
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.nomAcc,"Intitulé" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.nomAcc) }}
+            </div>
+            {{ form_widget(form.nomAcc, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.prixHtvaAcc,"Prix Htva" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.prixHtvaAcc) }}
+            </div>
+            {{ form_widget(form.prixHtvaAcc, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.tvaAcc,"T.V.A." ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.tvaAcc) }}
+            </div>
+            {{ form_widget(form.tvaAcc, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.descriptionAcc,"Description" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.descriptionAcc) }}
+            </div>
+            {{ form_widget(form.descriptionAcc, {'attr': {'class' : 'form-control', 'rows': 10}}) }}
+        </div>
+        {{ form_widget(form.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+        <a href="{{ path('admin_accompagnement_liste') }}"><button class="btn btn-danger" type="button">Annuler</button></a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

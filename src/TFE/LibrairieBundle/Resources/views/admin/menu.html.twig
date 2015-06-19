@@ -1,0 +1,119 @@
+<nav class="navbar navbar-inverse">
+    <div class="container_fluid">
+
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{{ path('admin_index') }}">Accueil</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Utilisateur <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Gestion générale</li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('admin_user_liste_actif') }}"><span class="glyphicon glyphicon-th-list"></span> Liste Actif<span class="badge pull-right">{{ listeNb.nbUserActifs }}</span></a></li>
+                    {% endif %}
+                    <li><a href="{{ path('admin_user_liste_inactif') }}" disabled=true><span class="glyphicon glyphicon-th-list"></span> Liste Inactif<span class="badge pull-right">{{ listeNb.nbUserInactifs }}</span></a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ path('admin_user_ajout') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-book"></span> Livre & Acc. <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Livre</li>
+                    <li><a href="{{ path('admin_livre_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste<span class="badge pull-right">{{ listeNb.nbLivres }}</span></a></li>
+                    <li><a href="{{ path('admin_livre_ajout') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Accompagnement</li>
+                    <li><a href="{{ path('admin_accompagnement_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_accompagnement_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Stock</li>
+                    <li><a href="{{ path('admin_livre_commander') }}"><span class="glyphicon glyphicon-tags"></span> Commander</a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-pushpin"></span> Options <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Genre</li>
+                    <li><a href="{{ path('admin_genre_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_genre_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Catégorie</li>
+                    <li><a href="{{ path('admin_categorie_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_categorie_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Format</li>
+                    <li><a href="{{ path('admin_format_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_format_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Édition</li>
+                    <li><a href="{{ path('admin_edition_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_edition_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+
+                    <li class="dropdown-header">Collection</li>
+                    <li><a href="{{ path('admin_collection_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste</a></li>
+                    <li><a href="{{ path('admin_collection_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-bullhorn"></span> News <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Gestion générale</li>
+                    <li><a href="{{ path('admin_news_liste_valide') }}"><span class="glyphicon glyphicon-th-list"></span> Validé<span class="badge pull-right">{{ listeNb.nbNewsActif }}</span></a></li>
+                    <li><a href="{{ path('admin_news_liste_invalide') }}"><span class="glyphicon glyphicon-plus"></span> Non validé<span class="badge pull-right">{{ listeNb.nbNewsInactif }}</span></a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-pencil"></span> Auteur <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Gestion générale</li>
+                    <li><a href="{{ path('admin_auteur_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Listing<span class="badge pull-right">{{ listeNb.nbAuteurs }}</span></a></li>
+                    <li><a href="{{ path('admin_auteur_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                    <li class="divider"></li>
+                    <li class="dropdown-header">Auteur - Récompense</li>
+                    <li><a href="{{ path('admin_auteur_recompense_ajouter') }}"><span class="glyphicon glyphicon-plus-sign"></span> Attribuer</a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Récompense <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Gestion générale</li>
+                    <li><a href="{{ path('admin_recompense_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Listing</a></li>
+                    <li><a href="{{ path('admin_recompense_ajouter') }}"><span class="glyphicon glyphicon-plus"></span> Ajouter</a></li>
+                </ul>
+            </li>
+            <li>
+                <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Commande <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Gestion générale</li>
+                    <li><a href="{{ path('admin_commande_liste_attente') }}"><span class="glyphicon glyphicon-th-list"></span> En attente<span class="badge pull-right">{{ listeNb.nbCommandesAttente }}</span></a></li>
+                </ul>
+            </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-euro"></span> Facture <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Gestion générale</li>
+                        <li><a href="{{ path('admin_facture_liste') }}"><span class="glyphicon glyphicon-th-list"></span> Liste<span class="badge pull-right"></span></a></li>
+                    </ul>
+                </li>
+            {% endif %}
+        </ul>
+
+        <ul class="nav navbar-nav pull-right">
+            <li>
+                <a href="{{ path('tfe_librairie_accueil') }}">Retour au site</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+

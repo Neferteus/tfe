@@ -1,0 +1,39 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <nav class="navbar navbar-default navbar-static-top">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="{{ path('tfe_librairie_accueil') }}">Accueil</a></li>
+                <li><a href="{{ path('catalogue_accueil') }}">Catalogue</a></li>
+                <li><a href="{{ path('catalogue_promotion') }}">Nos Promos</a></li>
+                <li><a href="{{ path('news_liste_valide') }}">News</a></li>
+                {% if is_granted('ROLE_AUTEUR') %}
+                    <li>
+                        <a href="{{ path('news_auteur', {'id': app.user.id}) }}">Mes News</a>
+                    </li>
+                {% endif %}
+                <li><a href="{{ path('contact') }}">Contact</a></li>
+                <li><a href="{{ path('tfe_librairie_about_us') }}">About us</a></li>
+            </ul>
+
+            {% if is_granted('ROLE_VENDEUR') %}
+                <ul class="nav navbar-nav pull-right">
+                    <li>
+                        <a href="{{ path('admin_index') }}">Admin</a>
+                    </li>
+                </ul>
+            {% endif %}
+        </nav>
+    </div>
+
+    <div class="row">
+        {% block galerie_body %}
+        {% endblock %}
+    </div>
+
+{% endblock %}

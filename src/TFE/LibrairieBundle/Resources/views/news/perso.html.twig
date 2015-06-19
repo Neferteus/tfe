@@ -1,0 +1,63 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes News - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2 align="center">Mes news</h2>
+            <p>
+                {# On affiche tous les messages flash dont le nom est « info » #}
+                {% for message in app.session.flashbag.get('info') %}
+            <p>Informations : {{ message }}</p>
+            {% endfor %}
+            </p>
+        </div>
+        <div class="col-sm-3">
+            <a href="{{ path('news_ajouter') }}"><button class="btn btn-success pull-right"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter une News</button> </a>
+        </div>
+    </div>
+
+    <div class="row">
+        {% if listeNews is not defined %}
+            <div class="well col-sm-offset-3 col-sm-6" align="center">
+                <h4>Vous n'avez pas encore publié.</h4>
+            </div>
+        {% else %}
+            {% for news in listeNews %}
+                <div class="row">
+                    <div class="panel-primary col-sm-offset-1 col-sm-10">
+                        <div class="panel-heading">
+                            <div class="panel-title">
+                                {{ news.titreNews }}
+                                <div class="pull-right">
+                                    {% if news.valide %}Validé{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="col-sm-10">
+                                {{ news.texteNews|truncate(400, true, '...') }}
+                                <p class="help-block">Publié le {{ news.dateNews|date("m/d/Y") }} à {{ news.dateNews|date("g:i") }}.</p>
+                            </div>
+                            <div class="col-sm-offset-1 col-sm-1">
+                                <p>
+                                    <a href="{{ path('news_modifier', {'id': news.id }) }}"><span class="glyphicon glyphicon-pencil" title="Modifier"></span></a>
+                                </p>
+                                <p>
+                                    <a href="{{ path('news_effacer', {'id': news.id }) }}"><span class="glyphicon glyphicon-trash" title="Effacer"></span></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="row">
+                {% include 'TFELibrairieBundle:utilitaire:paginationNewsPerso.html.twig' %}
+            </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

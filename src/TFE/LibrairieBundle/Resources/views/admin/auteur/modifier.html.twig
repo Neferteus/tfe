@@ -1,0 +1,96 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% form_theme form '@TFELibrairie/utilitaire/fields.html.twig' %}
+
+{% block body %}
+    <div class="jumbotron" align="center">
+        <h3>Modifier un auteur : {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}</h3>
+    </div>
+
+    <div class="well col-sm-offset-2 col-sm-8">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.nomAuteur,"Nom" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.nomAuteur) }}
+            </div>
+            {{ form_widget(form.nomAuteur, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.prenomAuteur,"Prénom" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.prenomAuteur) }}
+            </div>
+            {{ form_widget(form.prenomAuteur, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.telephoneAuteur,"Téléphone" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.telephoneAuteur) }}
+            </div>
+            {{ form_widget(form.telephoneAuteur, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group ">
+            <div class="col-sm-4">
+                {{ form_label(form.emailAuteur,"Email" ,{'label_attr' : {'class': 'control-label'} }) }}
+            </div>
+            <div class="col-sm-8">
+                {{ form_errors(form.emailAuteur) }}
+            </div>
+            {{ form_widget(form.emailAuteur, {'attr': {'class' : 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_label(form.dateNaissanceAuteur,"Date de naissance" ,{'label_attr' : {'class': 'control-label'} }) }}
+                </div>
+                <div class="col-sm-8">
+                    {{ form_errors(form.dateNaissanceAuteur) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateNaissanceAuteur.day, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateNaissanceAuteur.month, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateNaissanceAuteur.year, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_label(form.dateDecesAuteur,"Date de décès" ,{'label_attr' : {'class': 'control-label'} }) }}
+                </div>
+                <div class="col-sm-8">
+                    {{ form_errors(form.dateDecesAuteur) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateDecesAuteur.day, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateDecesAuteur.month, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+                <div class="col-sm-4">
+                    {{ form_widget(form.dateDecesAuteur.year, {'attr' : {'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
+        {{ form_widget(form.sauvegarder, {'attr': {'class' : 'btn btn-primary pull-right'}}) }}
+        <a href="{{ path('admin_auteur_liste') }}"><button class="btn btn-danger" type="button">Annuler</button></a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

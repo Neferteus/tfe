@@ -1,0 +1,24 @@
+# chemin: /admin/accompagnement
+
+admin_accompagnement_liste:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminAccompagnement:liste, page: 1 }
+    requirements:
+        page: \d*
+
+admin_accompagnement_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminAccompagnement:ajouter }
+
+admin_accompagnement_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminAccompagnement:modifier }
+    requirements:
+        id: \d*
+
+admin_accompagnement_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminAccompagnement:supprimer }
+    requirements:
+        id: \d*
+

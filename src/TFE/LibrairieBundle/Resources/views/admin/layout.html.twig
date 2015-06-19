@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Admin{% endblock %}</title>
+
+        {% block stylesheets %}
+            {# On charge le CSS de bootstrap #}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+            <!--[if IE]>
+            <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+            <![endif]-->
+
+            <!-- inclusion du style CSS de base -->
+            <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
+        {% endblock %}
+    </head>
+    <body>
+    {{ render(controller('TFELibrairieBundle:Admin:menu')) }}
+
+    <div class="container">
+
+        {% block body %}
+        {% endblock %}
+
+    </div>
+
+    {% block javascripts %}
+        {# JQuery #}
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        {# JQuery UI pour l'auto-completion #}
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.22/jquery-ui.min.js"></script>
+        {# Bootstrap #}
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        {# Ces 2 lignes servent à l'utilisation de FOSJsRoutingBundle #}
+        {#
+        <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+        #}
+    {% endblock %}
+
+    </body>
+
+    <hr>
+
+    <footer>
+        <p>
+            Créé par moi ! {{ 'now'|date('Y') }}
+        </p>
+    </footer>
+
+</html>

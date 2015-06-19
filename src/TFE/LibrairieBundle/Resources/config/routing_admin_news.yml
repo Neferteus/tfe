@@ -1,0 +1,32 @@
+# chemin: /admin/news
+
+admin_news_liste_valide:
+    path:     /valide/{page}
+    defaults: { _controller: TFELibrairieBundle:AdminNews:listeValide, page: 1 }
+    requirements:
+        page: \d*
+
+admin_news_liste_invalide:
+    path:     /non-valide/{page}
+    defaults: { _controller: TFELibrairieBundle:AdminNews:listeNonValide, page: 1 }
+    requirements:
+        page: \d*
+
+admin_news_voir_actif:
+    path:     /voir-valide/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminNews:voirActif }
+    requirements:
+        id:   \d+
+
+admin_news_voir_inactif:
+    path:     /voir-non-valide/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminNews:voirInactif }
+    requirements:
+        id:   \d+
+
+admin_news_changer_validation:
+    path:     /changer-validation/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminNews:changerValidation }
+    requirements:
+        id:   \d+
+

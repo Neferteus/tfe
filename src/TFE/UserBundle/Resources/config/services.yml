@@ -1,0 +1,4 @@
+services:
+#    tfe_user.example:
+#        class: TFE\UserBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

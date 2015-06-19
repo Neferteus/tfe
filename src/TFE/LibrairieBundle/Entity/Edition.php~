@@ -1,0 +1,44 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Edition
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\EditionRepository")
+ */
+class Edition
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomEdition", type="string", length=30)
+     */
+    private $nomEdition;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="urlEdition", type="string", length=255)
+     */
+    private $urlEdition;
+
+    /**
+     * @var Livre
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Livre", mappedBy="edition")
+     */
+    private $livres;
+}

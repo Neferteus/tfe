@@ -1,0 +1,96 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Promotion - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tfelibrairie/css/accueilSite.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row col-sm-offset-2 col-sm-8">
+        <div class="row">
+            {% for livre in livres %}
+                <div class="panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <p>
+                                <strong>Titre</strong> : {{ livre.titre }}
+                            </p>
+                            {# Activation du truncate dans le fichier app/config/config.yml => services #}
+                            <strong>Sous-titre</strong> : {% if (livre.soustitre|truncate(97,true,'...')) %}{{ livre.soustitre|truncate(97,true,'...') }}{% else %}~{% endif %}
+                        </h3>
+                    </div>
+                    <div class="panel-body" style="background-color: lightyellow">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                {% if (livre.photo) %}
+                                    <a href="{{ path('livre_info_promo', {'id' : livre.id}) }}">
+                                        <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-2">
+                                <p><strong>Prix :</strong></p>
+                                <p><strong>Auteur :</strong></p>
+                                <p><strong>Note :</strong></p>
+                                <p><strong>Fourni avec :</strong></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                {% if(livre.ristourne) %}
+                                    {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                {% else %}
+                                    {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                {% endif %}
+                                </p>
+                                <p>
+                                {% for auteur in livre.auteurs %}
+                                    {% if loop.first %}
+                                        {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% else %}
+                                        , {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% endif %}
+                                {% endfor %}
+                                </p>
+                                <p>
+                                {% if livre.moyenneNote %}
+                                    {{ livre.moyenneNote }} / 5
+                                {% else %}
+                                    ~ / 5
+                                {% endif %}
+                                </p>
+                                <p>
+                                {% for accompagnement in livre.accompagnements %}
+                                    {% if loop.first %}{{ accompagnement.nomAcc }}{% else %}, {{ accompagnement.nomAcc }}{% endif %}
+                                {% endfor %}
+                                </p>
+                            </div>
+                            <div class="col-sm-2">
+                                <h4>
+                                    <p>
+                                        <a href="{{ path('livre_info_promo', {'id' : livre.id}) }}">
+                                            <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                        </a>
+                                    </p>
+                                    <p>
+                                        <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}">
+                                            <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                        </a>
+                                    </p>
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% include '@TFELibrairie/utilitaire/pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

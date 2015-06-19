@@ -1,0 +1,137 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Catalogue - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tfelibrairie/css/accueilSite.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block galerie_body %}
+    <div id="accordeon" class="panel-group col-sm-2">
+    {% for genre in listeGenre %}
+        {% set livre = "" %}
+        {% for categorie in genre.categories %}
+            {% if categorie.livres|length > 0 %}{% set livre = categorie.livres|length %}{% endif %}
+        {% endfor %}
+        {% if livre > 0 %}
+        <div class="panel panel-primary" style="background-color: lightyellow;">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <a href="#item{{ genre.id }}" data-parent="#accordeon" data-toggle="collapse"> {{ genre.nomGenre }} </a>
+                </h3>
+            </div>
+            {% if loop.first %}
+                <div id="item{{ genre.id }}" class="panel-collapse collapse in">
+                    <ul class="list-unstyled">
+                        {% for categorie in genre.categories %}
+                            <li class="col-sm-offset-2">
+                                <a href="{{ path('catalogue_accueil', {'page' : 1, 'id' : categorie.id}) }}"> {{ categorie.nomCategorie }}<span class="pull-right">{{ categorie.livres|length }}</span></a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% else %}
+                <div id="item{{ genre.id }}" class="panel-collapse collapse">
+                    <ul class="list-unstyled">
+                        {% for categorie in genre.categories %}
+                            {% if categorie.livres|length > 0 %}
+                            <li class="col-sm-offset-2">
+                                <a href="{{ path('catalogue_accueil', {'page' : 1, 'id' : categorie.id}) }}"> {{ categorie.nomCategorie }}<span class="pull-right">{{ categorie.livres|length }}</span></a>
+                            </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endfor %}
+    </div>
+
+    <div class="row col-sm-offset-1 col-sm-8">
+        <div class="row">
+            {% for livre in livres %}
+                <div class="panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <p>
+                                <strong>Titre</strong> : {{ livre.titre }}
+                            </p>
+                            {# Activation du truncate dans le fichier app/config/config.yml => services #}
+                            <strong>Sous-titre</strong> : {% if (livre.soustitre|truncate(97,true,'...')) %}{{ livre.soustitre|truncate(97,true,'...') }}{% else %}~{% endif %}
+                        </h3>
+                    </div>
+                    <div class="panel-body" style="background-color: lightyellow">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                {% if (livre.photo) %}
+                                    <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                        <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                    </a>
+                                {% endif %}
+                            </div>
+                            <div class="col-sm-2">
+                                <p><strong>Prix :</strong></p>
+                                <p><strong>Auteur :</strong></p>
+                                <p><strong>Note :</strong></p>
+                                <p><strong>Fourni avec :</strong></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <p>
+                                {% if(livre.ristourne) %}
+                                    {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                {% else %}
+                                    {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                {% endif %}
+                                </p>
+                                <p>
+                                {% for auteur in livre.auteurs %}
+                                    {% if loop.first %}
+                                        {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% else %}
+                                        , {{ auteur.nomAuteur }} {{ auteur.prenomAuteur }}
+                                    {% endif %}
+                                {% endfor %}
+                                </p>
+                                <p>
+                                    {% if livre.moyenneNote %}
+                                        {{ livre.moyenneNote }} / 5
+                                    {% else %}
+                                        ~ / 5
+                                    {% endif %}
+                                </p>
+                                <p>
+                                    {% for accompagnement in livre.accompagnements %}
+                                        {% if loop.first %}{{ accompagnement.nomAcc }}{% else %}, {{ accompagnement.nomAcc }}{% endif %}
+                                    {% endfor %}
+                                </p>
+                            </div>
+                            <div class="col-sm-2">
+                                <h4>
+                                    <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                        <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                    </a>
+                                    <br />
+                                    {% if livre.aVenir == 0 %}
+                                        <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}">
+                                            <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                        </a><br />
+                                    {% endif %}
+                                </h4>
+                                {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+            {% endfor %}
+        </div>
+
+        <div class="row">
+            {% include 'TFELibrairieBundle:utilitaire:paginationCatalogue.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

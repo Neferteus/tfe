@@ -1,0 +1,32 @@
+# chemin: /panier/
+
+tfe_librairie_panier_ajouter:
+    path:     /ajouter/{id}/{quantite}
+    defaults: { _controller: TFELibrairieBundle:Panier:ajouter }
+    requirements:
+        id:       \d+
+        quantite: \d+
+
+tfe_librairie_panier_maj:
+    path:     /maj/{id}
+    defaults: { _controller: TFELibrairieBundle:Panier:majLigneCommande }
+    requirements:
+        id:   \d+
+
+tfe_librairie_panier_enlever:
+    path:     /enlever/{id}
+    defaults: { _controller: TFELibrairieBundle:Panier:enlever }
+    requirements:
+        id:   \d+
+
+tfe_librairie_panier_gestion:
+    path:     /gestion
+    defaults: { _controller: TFELibrairieBundle:Panier:gestionPanier }
+
+tfe_librairie_panier_connexion:
+    path:     /gestion/info
+    defaults: { _controller: TFELibrairieBundle:Panier:connexion }
+
+tfe_librairie_panier_envoi_paypal:
+    path:     /envoi/paypal
+    defaults: { _controller: TFELibrairieBundle:Panier:EnvoiPaypal }

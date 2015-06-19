@@ -1,0 +1,7 @@
+services:
+#    project.cacheimage_listener:
+#        class: TFE\LibrairieBundle\Listener\LivreListener
+#        arguments: ["@liip_imagine.cache.manager"]
+#        tags:
+#            - { name: doctrine.event_listener, event: postUpdate }
+#            - { name: doctrine.event_listener, event: preRemove }

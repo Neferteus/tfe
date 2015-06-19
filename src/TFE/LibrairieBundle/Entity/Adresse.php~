@@ -1,0 +1,60 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Adresse
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\AdresseRepository")
+ */
+class Adresse
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="rue", type="string", length=50)
+     */
+    private $rue;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="numero", type="string", length=10)
+     */
+    private $numero;
+
+    /**
+     * @var Ville
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Ville", inversedBy="adresses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $ville;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\OneToMany(targetEntity="TFE\UserBundle\Entity\Utilisateur", mappedBy="adresse")
+     */
+    private $utilisateurs;
+
+    /**
+     * @var Commande
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Commande", mappedBy="adresse")
+     */
+    private $commandes;
+
+}

@@ -1,0 +1,35 @@
+#carouselAffiche
+{
+    background-color: lightgray;
+}
+
+#carouselBest
+{
+    background-color: lightgray;
+}
+
+#carouselSoon
+{
+    background-color: lightgray;
+}
+
+#carouselNews
+{
+    background-color: lightgray;
+}
+
+#carouselPromo
+{
+    background-color: lightgray;
+}
+
+#loiseaulire
+{
+    text-align: center;
+}
+
+#prixBarre
+{
+    text-decoration:line-through;
+    color: #ff0000;
+}

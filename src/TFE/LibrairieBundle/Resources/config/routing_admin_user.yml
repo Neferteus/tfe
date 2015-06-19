@@ -1,0 +1,36 @@
+# chemin: /admin/user
+
+admin_user_liste_actif:
+    path:     /actif/{page}
+    defaults: { _controller: TFELibrairieBundle:AdminUser:listeUtilisateurActif, page: 1 }
+    requirements:
+        page: \d*
+
+admin_user_liste_inactif:
+    path:     /inactif/{page}
+    defaults: { _controller: TFELibrairieBundle:AdminUser:listeUtilisateurInactif, page: 1 }
+    requirements:
+        page: \d*
+
+admin_user_ajout:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminUser:ajouterUtilisateur }
+
+admin_user_view:
+    path:     /view/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminUser:voir }
+    requirements:
+        id: \d*
+
+admin_user_modif:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminUser:modifier }
+    requirements:
+        id: \d*
+
+admin_user_spprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminUser:supprimer }
+    requirements:
+        id: \d*
+

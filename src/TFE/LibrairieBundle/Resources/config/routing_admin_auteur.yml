@@ -1,0 +1,24 @@
+# chemin: /admin/auteur
+
+admin_auteur_liste:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminAuteur:liste, page: 1 }
+    requirements:
+        page: \d*
+
+admin_auteur_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminAuteur:ajouter }
+
+admin_auteur_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminAuteur:modifier }
+    requirements:
+        id: \d*
+
+admin_auteur_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminAuteur:supprimer }
+    requirements:
+        id: \d*
+

@@ -1,0 +1,22 @@
+# chemin: /admin/Collection
+
+admin_collection_liste:
+    path:     /
+    defaults: { _controller: TFELibrairieBundle:AdminCollection:liste }
+
+admin_collection_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminCollection:ajouter }
+
+admin_collection_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminCollection:modifier }
+    requirements:
+        id: \d*
+
+admin_collection_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminCollection:supprimer }
+    requirements:
+        id: \d*
+

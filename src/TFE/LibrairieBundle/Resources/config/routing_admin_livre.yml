@@ -1,0 +1,41 @@
+# chemin: /admin/livre
+
+admin_livre_liste:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:liste, page: 1 }
+    requirements:
+        page: \d*
+
+admin_livre_ajout:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:ajouter }
+
+admin_livre_modif:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:modifier }
+    requirements:
+        id: \d*
+
+admin_livre_supprimer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:supprimer }
+    requirements:
+        id: \d*
+
+admin_livre_ajout_format_ac:
+    path:     /add/acformat
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:completeFormat }
+    requirements:
+        methods: GET
+
+admin_livre_commander:
+    path:     /a-commander
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:aCommander }
+
+admin_livre_maj_stock:
+    path:     /maj-stock/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminLivre:majStock }
+    requirements:
+        id:   \d+
+        methods: POST
+

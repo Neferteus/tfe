@@ -1,0 +1,56 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Commande{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des commandes</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    <div class="row">
+    {% if commandes is not defined %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de commandes en attente</h4>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="row col-sm-offset-1 col-sm-10">
+                {% for commande in commandes %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            N° de commande : {{ commande.nrCommande }}
+                            <a href="{{ path('admin_commande_preparation', {'id': commande.id}) }}">
+                                <button class="btn btn-success pull-right">Préparé <span class="glyphicon glyphicon-circle-arrow-right"></span></button>
+                            </a>
+                            <br />
+                            Date de la commande : {{ commande.dateCommande|date('d-m-y') }} à {{ commande.dateCommande|date('h:i') }}<br />
+                        </div>
+                        <div class="panel-body">
+                            {% for ligne in commande.livreCommandes %}
+                                <p>
+                                    Code ISBN : {{ ligne.livre.codeIsbn }}<br />
+                                    Titre : {{ ligne.livre.titre }}{% if ligne.livre.soustitre %} ~ {{ ligne.livre.soustitre }} {% endif %}<br />
+                                    Quantité : {{ ligne.quantite }}
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}

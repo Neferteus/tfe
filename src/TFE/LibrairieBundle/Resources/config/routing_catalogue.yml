@@ -1,0 +1,14 @@
+# chemin: /catalogue
+
+catalogue_accueil:
+    path:     /{page}/{id}
+    defaults: { _controller: TFELibrairieBundle:Catalogue:accueil, page: 1, id: 1 }
+    requirements:
+        page: \d*
+        id:   \d*
+
+catalogue_promotion:
+    path:     /promo/{page}
+    defaults: { _controller: TFELibrairieBundle:Catalogue:promo, page: 1 }
+    requirements:
+        page: \d*

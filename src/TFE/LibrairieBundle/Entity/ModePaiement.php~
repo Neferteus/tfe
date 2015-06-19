@@ -1,0 +1,44 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ModePaiement
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\ModePaiementRepository")
+ */
+class ModePaiement
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomPaiement", type="string", length=30)
+     */
+    private $nomPaiement;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="dureeHeure", type="integer")
+     */
+    private $dureeHeure;
+
+    /**
+     * @var Commande
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\Commande", mappedBy="modePaiement")
+     */
+    private $commandes;
+}

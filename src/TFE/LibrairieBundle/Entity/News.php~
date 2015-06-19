@@ -1,0 +1,67 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * News
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\NewsRepository")
+ */
+class News
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="titreNews", type="string", length=100)
+     */
+    private $titreNews;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="texteNews", type="text")
+     */
+    private $texteNews;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNews", type="datetime")
+     */
+    private $dateNews;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="valide", type="boolean")
+     */
+    private $valide;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="accueil", type="boolean")
+     */
+    private $accueil;
+
+    /**
+     * @var Utilisateur
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\UserBundle\Entity\Utilisateur", inversedBy="news")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $utilisateur;
+
+}

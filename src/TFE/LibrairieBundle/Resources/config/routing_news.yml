@@ -1,0 +1,36 @@
+# chemin: /news
+
+news_liste_valide:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:News:listeValide, page: 1}
+    requirements:
+        page: \d*
+
+news_auteur:
+    path:     /personnel/{id}/{page}
+    defaults: { _controller: TFELibrairieBundle:News:mesNews, page: 1}
+    requirements:
+        id:   \d+
+        page: \d*
+
+news_ajouter:
+    path:     /add
+    defaults: { _controller: TFELibrairieBundle:News:ajouter }
+
+news_voir:
+    path:     /see/{id}
+    defaults: { _controller: TFELibrairieBundle:News:voir }
+    requirements:
+        id:   \d+
+
+news_modifier:
+    path:     /update/{id}
+    defaults: { _controller: TFELibrairieBundle:News:modifier }
+    requirements:
+        id:   \d+
+
+news_effacer:
+    path:     /delete/{id}
+    defaults: { _controller: TFELibrairieBundle:News:supprimer }
+    requirements:
+        id:   \d+

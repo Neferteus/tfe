@@ -1,0 +1,13 @@
+# chemin: /admin/commande
+
+admin_commande_liste_attente:
+    path:     /{page}
+    defaults: { _controller: TFELibrairieBundle:AdminCommande:listeAttente, page: 1 }
+    requirements:
+        page: \d*
+
+admin_commande_preparation:
+    path:     /preparation/{id}
+    defaults: { _controller: TFELibrairieBundle:AdminCommande:preparation }
+    requirements:
+        id:   \d+

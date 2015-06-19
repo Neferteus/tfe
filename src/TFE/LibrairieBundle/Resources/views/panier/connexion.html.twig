@@ -1,0 +1,50 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Panier Connexion - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2 align="center">Vos coordonnées</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="well col-sm-offset-1 col-sm-4">
+            <legend></legend>
+        </div>
+        <div class="well col-sm-offset-2 col-sm-4 col-offset-1">
+            <legend>Connexion</legend>
+            <div class="row">
+                <div class="col-sm-offset-2">
+                    <div style="font-weight: bold">Vous avez déjà un compte?</div>
+                    Veuillez vous identifier :
+                </div>
+            </div>
+            <div class="row">
+            <form class="form-horizontal col-sm-offset-2 col-sm-8" action="{{ path('login_check') }}" method="post">
+                <div class="form-group">
+                    <label for="username" class="control-label">Login :</label>
+                    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" />
+                </div>
+
+                <div class="form-group">
+                    <label for="password" class="control-label">Mot de passe :</label>
+                    <input class="form-control" type="password" id="password" name="_password" />
+                </div>
+                <input type="hidden" name="_target_path" value="tfe_librairie_panier_envoi_paypal" />
+
+                <input class="btn btn-primary" type="submit" value="Connexion" />
+
+                {% if error %}
+                    <p>
+                        <div class="alert alert-danger">{{ error.message }}</div>
+                    </p>
+                {% endif %}
+            </form>
+            </p>
+        </div>
+    </div>
+{% endblock %}

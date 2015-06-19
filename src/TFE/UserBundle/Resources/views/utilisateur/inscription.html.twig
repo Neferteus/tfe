@@ -1,0 +1,150 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+
+{% block galerie_body %}
+    <div class="row well">
+        {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+        {{ form_errors(form) }}
+        <div class="row col-sm-12">
+            <div class="col-sm-5">
+                <legend>Informations personnelles</legend>
+                <div class="row">
+                    <div class="form_group">
+                        {{ form_label(form.username,"Nom d'utilisateur" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.username) }}
+                        <div class="">
+                            {{ form_widget(form.username, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(form.password.first,"Mot de passe" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.password.first) }}
+                        <div class="">
+                            {{ form_widget(form.password.first, {'attr': {'class' : 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    {{ form_label(form.password.second,"Mot de passe(validation)" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.password.second) }}
+                    <div class="">
+                        {{ form_widget(form.password.second, {'attr': {'class' : 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        {{ form_label(form.nom,"Nom" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.nom) }}
+                        <div class="">
+                            {{ form_widget(form.nom, {'attr': {'class' : 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        {{ form_label(form.prenom,"Prénom" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.prenom) }}
+                        <div class="">
+                            {{ form_widget(form.prenom, {'attr': {'class' : 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        {{ form_label(form.telephone,"Téléphone" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.telephone) }}
+                        <div class="">
+                            {{ form_widget(form.telephone, {'attr': {'class' : 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div>
+                        {{ form_label(form.email,"Email" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.email) }}
+                        <div class="">
+                            {{ form_widget(form.email, {'attr': {'class' : 'form-control input-sm'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        {{ form_label(form.dateNaissance,"Date de naissance" ,{'label_attr' : {'class': 'control-label'}}) }}
+                        {{ form_errors(form.dateNaissance) }}
+                    </div>
+                    <div class="col-sm-3">
+                        {{ form_widget(form.dateNaissance.day, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-offset-sm-1 col-sm-3">
+                        {{ form_widget(form.dateNaissance.month, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="col-offset-sm-1 col-sm-3">
+                        {{ form_widget(form.dateNaissance.year, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    {{ form_label(form.sexe, "Genre", {'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.sexe) }}
+                    <div>
+                        {{ form_widget(form.sexe, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                <br />
+
+            </div>
+            <div class="col-sm-offset-2 col-sm-5">
+            <legend>Adresse</legend>
+            <div class="row">
+                <div class="form-group">
+                    {{ form_label(form.adresse.rue,"Rue" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.adresse.rue) }}
+                    <div class="">
+                        {{ form_widget(form.adresse.rue, {'attr': {'class' : 'form-control'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.adresse.numero,"Numéro" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.adresse.numero) }}
+                    <div class="">
+                        {{ form_widget(form.adresse.numero, {'attr': {'class' : 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.adresse.ville.codePostal,"Code postal" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.adresse.ville.codePostal) }}
+                    <div class="">
+                        {{ form_widget(form.adresse.ville.codePostal, {'attr': {'class' : 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.adresse.ville.localite,"Localité" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.adresse.ville.localite) }}
+                    <div class="">
+                        {{ form_widget(form.adresse.ville.localite, {'attr': {'class' : 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.adresse.ville.pays,"Pays" ,{'label_attr' : {'class': 'control-label'}}) }}
+                    {{ form_errors(form.adresse.ville.pays) }}
+                    <div class="">
+                        {{ form_widget(form.adresse.ville.pays, {'attr': {'class' : 'form-control input-sm'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <br />
+        <div class="pull-right">{{ form_widget(form.sauvegarder, {'attr': {'class': 'btn btn-primary'}}) }}</div>
+        <a href="{{ path('tfe_librairie_accueil') }}">
+            <button type="button" class="btn btn-warning"><span class="glyphicon glyphicon-home" ></span> Accueil</button>
+        </a>
+        {{ form_rest(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "TFELibrairieBundle:admin:layout.html.twig" %}
+
+{% block title %}{{ parent() }} - Récompense{% endblock %}
+
+{% block body %}
+    <div class="jumbotron">
+        <h3 align="center">Liste des récompenses</h3>
+        <p>
+            {# On affiche tous les messages flash dont le nom est « info » #}
+            {% for message in app.session.flashbag.get('info') %}
+                <p>Informations : {{ message }}</p>
+            {% endfor %}
+        </p>
+    </div>
+
+    {% if pagination.pages_count == 0 %}
+        <div class="jumbotron">
+            <h4 align="center">Pas de récompense enregistrée</h4>
+        </div>
+    {% else %}
+        <div class="row col-sm-offset-1 col-sm-10">
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                    <tr class="info">
+                        <th class="col-sm-9">Intitulé</th>
+                        <th class="col-sm-3">Outils</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for recompense in recompenses %}
+                        <tr>
+                            <td class="col-sm-9">{{ recompense.nomRecompense }}</td>
+                            <td class="col-sm-3">
+                                <a href="{{ path('admin_recompense_modifier', {'id': recompense.id}) }}">Modifier</a> -
+                                <a href="{{ path('admin_recompense_supprimer', {'id': recompense.id}) }}" onclick="return confirm('Etes-vous certain de vouloir supprimer?')">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% include 'TFELibrairieBundle:utilitaire:pagination.html.twig' %}
+        </div>
+    {% endif %}
+
+{% endblock %}

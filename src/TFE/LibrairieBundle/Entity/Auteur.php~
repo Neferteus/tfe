@@ -1,0 +1,79 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Auteur
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\AuteurRepository")
+ */
+class Auteur
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nomAuteur", type="string", length=50)
+     */
+    private $nomAuteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="prenomAuteur", type="string", length=50)
+     */
+    private $prenomAuteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="telephoneAuteur", type="string", length=25)
+     */
+    private $telephoneAuteur;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="emailAuteur", type="string", length=255)
+     */
+    private $emailAuteur;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateNaissanceAuteur", type="date")
+     */
+    private $dateNaissanceAuteur;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDecesAuteur", type="date")
+     */
+    private $dateDecesAuteur;
+
+    /**
+     * @var Livre
+     *
+     * @ORM\ManyToMany(targetEntity="TFE\LibrairieBundle\Entity\Livre", mappedBy="auteurs")
+     */
+    private $livres;
+
+    /**
+     * @var AuteurRecompense
+     *
+     * @ORM\OneToMany(targetEntity="TFE\LibrairieBundle\Entity\AuteurRecompense", mappedBy="auteur")
+     */
+    private $auteurRecompenses;
+}

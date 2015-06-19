@@ -1,0 +1,74 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Panier - {{ parent() }}
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="row">
+        <div class="well col-sm-offset-3 col-sm-6">
+            <h2 align="center">Votre panier</h2>
+        </div>
+    </div>
+
+    {% if panier|length == 0 %}
+        <div class="well col-sm-6">
+            Votre panier est vide.<br />
+            Cliquez <a href="{{ path('tfe_librairie_accueil') }}">ici</a> pour continuer vos achats
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+                {% for key, ligne in panier %}
+                    <legend>Titre : {{ (ligne.livre.titre) }}<span class="pull-right">Total : {{ ((ligne.prixVenteFinalHtva + ligne.tvaVente) * ligne.quantite)|number_format(2, ',', ' ') }} €</span></legend>
+                    <div class="col-sm-6">
+                        <p>
+                            Quantite : {{ ligne.quantite }}
+                        </p>
+                        <p>
+                            Prix HTVA : {{ ligne.prixVenteFinalHtva }}</span>
+                        </p>
+                        <p>
+                            Montant TVA : {{ ligne.tvaVente }}
+                        </p>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <form method="POST" action="{{ path('tfe_librairie_panier_maj', {'id': ligne.livre.id}) }}" class="form">
+                                <div class="form-group ">
+                                    <label class="control-label" for="quantiteLivre">Entrez la quantité voulue :</label><br />
+                                    <div class="col-sm-offset-1 col-sm-3">
+                                        <input class="form-control" id="quantiteLivre" name="quantite" type="number" min="1" required="true">
+                                    </div>
+                                    <p>
+                                        <input type="submit" class="btn btn-info btn-sm" value="Mettre à jour le panier">
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <a href="{{ path('tfe_librairie_panier_enlever', {'id': key}) }}" class="col-sm-offset-4"><input type="button" class="btn btn-danger btn-sm" value="Retirer l'article du panier"></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <br />
+
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10">
+                <div class="col-sm-offset-6 col-sm-6 well">
+                    <div class="row">
+                        <div class="col-sm-7"><h3 class="pull-right">Total TTC</h3></div>
+                        <div class="col-sm-5"><h3 class="pull-right">{{ app.session.get('totalPanier')|number_format(2, ',', ' ') }} €</h3></div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <a href="{{ path('tfe_librairie_panier_connexion') }}"><input type="button" class="btn btn-success col-sm-offset-4 col-sm-8" value="Valider et commander"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

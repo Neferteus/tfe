@@ -1,0 +1,271 @@
+{% extends "TFELibrairieBundle::layout.html.twig" %}
+
+{% block title %}
+    Accueil - {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/tfelibrairie/css/accueilSite.css') }}" type="text/css" media="all"/>
+{% endblock %}
+
+{% block galerie_body %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Nous sommes heureux de vous voir sur notre site !</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                Afin de répondre aux mieux à l'attente de nos clients, nous avons décidé de nous moderniser
+                pour vous permettre de consulter nos livres depuis chez vous.
+            </p>
+            <p>
+                Nos vendeurs se tiennent néanmoins encore à votre disposition au sein de notre librairie afin de continuer
+                à vous procurer un service maximum. N'hésitez pas à passer pour toutes questions ou informations
+                complémentaires.
+            </p>
+            <p>
+                Bonne lecture à tous !
+            </p>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div id="teteCarouselAffiche" class="panel-heading">
+                    <h4 id="titreCarouselAffiche" class="panel-title">Nos coups de coeur</h4>
+                </div>
+                <div id="carouselAffiche" class="panel-body carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for livre in teteAffiche %}
+                            <div class="col-sm-offset-2 item {% if loop.first %}active{% endif %}">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                            <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <strong>{{ livre.titre }}</strong><br />
+                                        {{ livre.edition.nomEdition }}<br />
+                                        {% if(livre.ristourne) %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                        {% else %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                        {% endif %}
+                                        <br />
+                                        {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+                                        <h4>
+                                            <a href="{{ path('livre_info', {'id' : livre.id}) }}" class="col-sm-offset-6">
+                                                <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                            </a>
+                                            {% if livre.aVenir == 0 %}
+                                                <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}" class="col-sm-offset-1">
+                                                    <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                                </a>
+                                            {% endif %}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left carousel-control" href="#carouselAffiche" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carouselAffiche" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Nos meilleures ventes</h4>
+                </div>
+                <div id="carouselBest" class="panel-body carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for livre in teteVente %}
+                            <div class="col-sm-offset-2 item {% if loop.first %}active{% endif %}">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                            <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <strong>{{ livre.titre }}</strong><br />
+                                        {{ livre.edition.nomEdition }}<br />
+                                        {% if(livre.ristourne) %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                        {% else %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                        {% endif %}
+                                        <br />
+                                        {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+                                        <h4>
+                                            <a href="{{ path('livre_info', {'id' : livre.id}) }}" class="col-sm-offset-6">
+                                                <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                            </a>
+                                            {% if livre.aVenir == 0 %}
+                                                <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}" class="col-sm-offset-1">
+                                                    <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                                </a>
+                                            {% endif %}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left carousel-control" href="#carouselBest" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carouselBest" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Pochainements dans votre librairie</h4>
+                </div>
+                <div id="carouselSoon" class="panel-body carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for livre in aVenir %}
+                            <div class="col-sm-offset-2 item {% if loop.first %}active{% endif %}">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                            <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <strong>{{ livre.titre }}</strong><br />
+                                        {{ livre.edition.nomEdition }}<br />
+                                        {% if(livre.ristourne) %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                        {% else %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                        {% endif %}
+                                        <br />
+                                        {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+                                        <h4>
+                                            <a href="{{ path('livre_info', {'id' : livre.id}) }}" class="col-sm-offset-6">
+                                                <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                            </a>
+                                            {% if livre.aVenir == 0 %}
+                                            <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}" class="col-sm-offset-1">
+                                                <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                            </a>
+                                            {% endif %}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left carousel-control" href="#carouselSoon" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carouselSoon" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-offset-1">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Ne ratez pas nos promotions</h4>
+                </div>
+                <div id="carouselPromo" class="panel-body carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for livre in promotion %}
+                            <div class="col-sm-offset-2 item {% if loop.first %}active{% endif %}">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <a href="{{ path('livre_info', {'id' : livre.id}) }}">
+                                            <img src="{{ livre.webPath() | imagine_filter('my_thumb') }}" alt="Photo du livre" title="{{ livre.titre }}"/>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <strong>{{ livre.titre }}</strong><br />
+                                        {{ livre.edition.nomEdition }}<br />
+                                        {% if(livre.ristourne) %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} € <strong>*** {{ livre.ristourne }} % de ristourne ! ***</strong>
+                                        {% else %}
+                                            {{ livre.prixTotal|number_format(2, ',', '.') }} €
+                                        {% endif %}
+                                        <br />
+                                        {% if livre.stock < 1 %}<h4 style="color: #ff0000;">Pas de stock</h4>{% endif %}
+                                        <h4>
+
+                                            <a href="{{ path('livre_info', {'id' : livre.id}) }}" class="col-sm-offset-6">
+                                                <span class="glyphicon glyphicon-eye-open" title="Description, Commentaire et Notation"></span>
+                                            </a>
+                                            {% if livre.aVenir == 0 %}
+                                                <a href="{{ path('tfe_librairie_panier_ajouter', {'id': livre.id, 'quantite': 1}) }}" class="col-sm-offset-1">
+                                                    <span class="glyphicon glyphicon-shopping-cart" title="Ajouter au panier"></span>
+                                                </a>
+                                            {% endif %}
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="left carousel-control" href="#carouselPromo" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carouselPromo" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h4 class="panel-title">Nos partenaires</h4>
+            </div>
+            <div class="panel-body">
+                <a href="http://www.librairiescientia.eu/" target="_blank">
+                    <img src="{{ asset('general/scientia.jpg') }}" title="Scientia" class="col-sm-12" />
+                </a>
+            </div>
+            <div class="panel-body">
+                <a id="loiseaulire" href="http://www.loiseaulire.com/" target="_blank">
+                    <h3>L'Oiseau-Lire</h3>
+                </a>
+            </div>
+            <div class="panel-body">
+                <a href="http://www.librairieflorilege.be/" target="_blank">
+                    <img src="{{ asset('general/florilege.jpg') }}" title="Florilège" class="col-sm-12" />
+                </a>
+            </div>
+        </div>
+        {% if listeNews %}
+        <div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Les dernières News</h4>
+                </div>
+                <div class="panel-body">
+                    {% for new in listeNews %}
+                        <h3>{{ new.titreNews|truncate(30,true,'...') }}</h3>
+                        {{ new.texteNews|truncate(200,true,'...')|nl2br }}<br />
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}

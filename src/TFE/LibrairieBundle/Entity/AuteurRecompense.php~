@@ -1,0 +1,46 @@
+<?php
+
+namespace TFE\LibrairieBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * AuteurRecompense
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="TFE\LibrairieBundle\Entity\AuteurRecompenseRepository")
+ */
+class AuteurRecompense
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="anneeDistinction", type="date")
+     */
+    private $anneeDistinction;
+
+    /**
+     * @var Auteur
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Auteur", inversedBy="auteurRecompenses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $auteur;
+
+    /**
+     * @var Recompense
+     *
+     * @ORM\ManyToOne(targetEntity="TFE\LibrairieBundle\Entity\Recompense", inversedBy="auteurRecompenses")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $recompense;
+}
