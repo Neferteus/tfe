@@ -1,0 +1,29 @@
+tfe_librairie:
+    resource: "@TFELibrairieBundle/Resources/config/routing.yml"
+    prefix:   /
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"
+
+#fos_js_routing:
+#    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+login:
+    pattern:  /login
+    defaults: { _controller: TFEUserBundle:Security:login }
+
+login_check:
+    pattern:  /login_check
+
+logout:
+    pattern:  /logout
+
+inscription:
+    pattern:  /inscription
+    defaults: { _controller: TFEUserBundle:Utilisateur:inscription }
+
+confirmation:
+    pattern:  /confirmation
+    defaults: { _controller: TFEUserBundle:Utilisateur:confirmation }
+
+

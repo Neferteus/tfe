@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Librairie{% endblock %}</title>
+
+        {% block stylesheets %}
+            {# On charge le CSS de bootstrap #}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            <!--[if IE]>
+                <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+            <![endif]-->
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row" align="center">
+                <div class="col-sm-4">
+                    <a href="{{ path('tfe_librairie_accueil') }}">
+                        <img src="{{ asset('general/logo.jpg') }}" alt="Le Mille-Feuilles" class="col-sm-12" />
+                    </a>
+                </div>
+
+                <div class="col-sm-4">
+                    <h4>Mille-Feuilles</h4>
+                    <h4>Venez dévorer nos livres !</h4>
+                </div>
+
+                <div class="col-sm-4">
+                    <h4>
+                        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                            Bienvenue {{ app.user.username }}.<br />
+                            <a href="{{ path('logout') }}">Se déconnecter</a>
+                        {% else %}
+                            <a href="{{ path('login') }}">Connexion</a> / <a href="{{ path('inscription') }}">S'inscrire</a>
+                        {% endif %}
+                    </h4>
+                </div>
+            </div>
+
+            <div class="row" align="center">
+                <div class="col-sm-4">
+                    Ouvert du Lundi au vendredi de 9h à 18h<br />
+                    Le samedi de 9h à 19h
+                </div>
+
+                <div class="col-sm-4">
+                    <form class="navbar-form inline-form" method="POST" action="{{ path('livre_recherche') }}">
+                        <div class="form-group">
+                            <input name="recherche" type="search" class="input-sm form-control" placeholder="Recherche">
+                            <button type="submit" class="btn btn-primary btn-sm"><span class="glyphicon glyphicon-eye-open"></span> Chercher</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-sm-4">
+                    <strong>Votre panier {{ app.session.get('totalPanier')|number_format(2, ',', ' ') }} €</strong> <a href="{{ path('tfe_librairie_panier_gestion') }}"><img class="col-sm-offset-1" src="{{ asset('general/panier.jpg') }}" alt="Mon panier"></a>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                {% block body %}
+
+                {% endblock %}
+            </div>
+
+        </div>
+
+        {% block javascripts %}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        {% endblock %}
+
+    </body>
+
+    <hr>
+
+    <footer>
+        <p align="center">
+            <a href="{{ path('conditions_generales_vente') }}">Conditions générales de vente</a>&nbsp;
+            <a href="{{ path('infos_personnelles') }}">Mentions légales</a>&nbsp;
+            <a href="{{ path('cookies_publicites') }}">Cookies et Publicité sur Internet</a>&nbsp;
+            &copy; Mars 2015 - {{ 'now'|date('Y') }} Devlin Corporation
+        </p>
+        <p align="center">Site démo pour un TFE en 3ème Bachelier en Informatique de Gestion.</p>
+    </footer>
+
+</html>

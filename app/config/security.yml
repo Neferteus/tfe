@@ -1,0 +1,36 @@
+security:
+    encoders:
+        # Symfony\Component\Security\Core\User\User: plaintext
+        TFE\UserBundle\Entity\Utilisateur: sha512
+
+
+    role_hierarchy:
+        ROLE_AUTEUR:      ROLE_USER
+        ROLE_VENDEUR:     [ROLE_USER, ROLE_AUTEUR]
+        ROLE_ADMIN:       [ROLE_USER, ROLE_AUTEUR, ROLE_VENDEUR]
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_AUTEUR, ROLE_VENDEUR, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        main:
+            entity: { class: TFE\UserBundle\Entity\Utilisateur, property: username }
+
+    firewalls:
+        main:
+            pattern:    ^/
+            anonymous:  true
+            provider:   main
+            form_login:
+                login_path:   login
+                check_path:   login_check
+                target_path_parameter:  _target_path
+                #use_referer:  true
+            logout:
+                path:   logout
+                target: /
+                invalidate_session: false
+
+
+    access_control:
+        - { path: ^/admin, roles: ROLE_VENDEUR }
+        - { path: ^/news/personnel, roles: ROLE_AUTEUR }
+        - { path: ^/panier/validation, roles: ROLE_USER }
